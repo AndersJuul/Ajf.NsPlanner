@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
-using Ajf.NsPlanner.Application.CommandHandlers;
 using Ajf.NsPlanner.Domain.Entities;
 using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.Domain.Queries;
