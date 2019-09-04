@@ -1,0 +1,125 @@
+﻿<Window x:Name="MainWindow1" x:Class="Ajf.NsPlanner.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:services="clr-namespace:Ajf.NsPlanner.UI.Services"
+        mc:Ignorable="d"
+        Width="800" Height="700" Left="1" Top="1"
+        Title="{Binding Title}" 
+        DataContextChanged="MainWindow1_DataContextChanged" 
+        WindowState="Maximized" Loaded="MainWindow1_Loaded" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.ColumnSpan="2" Margin="0,0,99,0">
+            <MenuItem Header="Fil" >
+                <MenuItem Header="Opdatér fra Google Drive" Command="{Binding GetLatestRawCommand}" CommandParameter="{Binding}"/>
+                <MenuItem Header="Opdatér ønsker fra CSV" Command="{Binding ImportLatestRawCommand}" CommandParameter="{Binding}" />
+                <MenuItem Header="Afslut" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=MainWindow1}"/>
+            </MenuItem>
+            <MenuItem Header="Vis" >
+                <MenuItem Header="Datoer" IsCheckable="True" IsChecked="{Binding EditDatesViewModel.IsOpen}"></MenuItem>
+                <Separator />
+                <MenuItem Header="Tildelingsstatistik" IsCheckable="True" IsChecked="{Binding StatsAcceptedRejectedViewModel.IsOpen}"></MenuItem>
+                <MenuItem Header="Emailstatistik" IsCheckable="True" IsChecked="{Binding StatsEmailAddressesViewModel.IsOpen}"></MenuItem>
+                <MenuItem Header="Skolestatistik" IsCheckable="True" IsChecked="{Binding StatsSchoolsViewModel.IsOpen}"></MenuItem>
+                
+            </MenuItem>
+            <MenuItem Header="Tildel">
+                <MenuItem Header="Vejleder" CommandParameter="{Binding}" Command="{Binding StartAssignmentCounselorCommand}" InputGestureText="F5"/>
+            </MenuItem>
+        </Menu>
+
+        <DockPanel Grid.Row="1" >
+
+            <StackPanel DockPanel.Dock="Left" Width="350">
+                <ListView MinHeight="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                          ItemsSource="{Binding PeriodSelectionViewModel.PeriodList}" SelectedItem="{Binding PeriodSelectionViewModel.SelectedPeriod}" 
+                          BorderBrush="Black">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Periode" DisplayMemberBinding="{Binding DateRange}"></GridViewColumn>
+                            <GridViewColumn Header="Target" DisplayMemberBinding="{Binding Target}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button Content="Slet" Command="{Binding PeriodSelectionViewModel.DeletePeriodCommand}" CommandParameter="{Binding}" Padding="10" Margin="10"></Button>
+                    <Button Content="Rediger" Click="EditPeriodClick" IsEnabled="{Binding PeriodSelectionViewModel.IsPeriodSelected}" Padding="10" Margin="10"></Button>
+                    <Button Content="Ny" Command="{Binding PeriodSelectionViewModel.NewPeriodCommand}" CommandParameter="{Binding}" Padding="10" Margin="10"></Button>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Filter, specificeret" FontWeight="Bold" />
+                    <CheckBox Content="Skjul uspecifierede" IsChecked="{Binding AssignmentsViewModel.FilterHideUnspecified}"></CheckBox>
+                    <CheckBox Content="Skjul fuldt specifierede" IsChecked="{Binding AssignmentsViewModel.FilterHideFullySpecified}"></CheckBox>
+                    <CheckBox Content="Skjul delvist specifierede" IsChecked="{Binding AssignmentsViewModel.FilterHidePartlySpecified}"></CheckBox>
+                    <Label Content="Mærke" />
+                    <TextBox Text="{Binding AssignmentsViewModel.FilterMark}"></TextBox>
+                </StackPanel>
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Detaljer"></Label>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Time Stamp"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding AssignmentsViewModel.SelectedAssignment.TimeStamp,Mode=OneWay}" IsReadOnly="True"></TextBox>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Desire"></Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AssignmentsViewModel.SelectedAssignment.Desire,Mode=OneWay}" IsReadOnly="True"></TextBox>
+                </Grid>
+
+            </StackPanel>
+            <!--Center by omitting dock spec-->
+            <StackPanel Orientation="Vertical">
+
+            </StackPanel>
+            <ListView ItemsSource="{Binding AssignmentsViewModel.Items}" 
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                      SelectedItem="{Binding AssignmentsViewModel.SelectedAssignment}"
+                      services:GridViewSort.AutoSort="True"
+                      BorderBrush="Black">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" services:GridViewColumnVisibilityManager.IsVisible="{Binding AssignmentsViewModel.ShowIdColumn}" ></GridViewColumn>
+                        <GridViewColumn Header="Mærke" DisplayMemberBinding="{Binding Marker}" services:GridViewSort.PropertyName="Marker"></GridViewColumn>
+                        <GridViewColumn Header="Time Stamp" DisplayMemberBinding="{Binding TimeStamp}" services:GridViewSort.PropertyName="TimeStamp"></GridViewColumn>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding SpecificationStatus}" services:GridViewSort.PropertyName="Status"></GridViewColumn>
+                        <GridViewColumn Header="Person" DisplayMemberBinding="{Binding Person}" services:GridViewSort.PropertyName="Person"></GridViewColumn>
+                        <GridViewColumn Header="Skole/Inst Navn" DisplayMemberBinding="{Binding SchoolInstituteName}" services:GridViewSort.PropertyName="SchoolInstituteName"></GridViewColumn>
+                        <GridViewColumn Header="Ønske" DisplayMemberBinding="{Binding Desire}" services:GridViewSort.PropertyName="Desire"></GridViewColumn>
+                        <GridViewColumn Header="Kommentar" DisplayMemberBinding="{Binding EventComment}" services:GridViewSort.PropertyName="EventComment"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+
+    </Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="F5" CommandParameter="{Binding}" Command="{Binding StartAssignmentCounselorCommand}"  />
+        <KeyBinding Key="F12" CommandParameter="{Binding}" Command="{Binding ImportLatestRawCommand}" />
+        <KeyBinding Key="NumPad0"  CommandParameter="0" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad1"  CommandParameter="1" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad2"  CommandParameter="2" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad3"  CommandParameter="3" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad4"  CommandParameter="4" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad5"  CommandParameter="5" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad6"  CommandParameter="6" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad7"  CommandParameter="7" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad8"  CommandParameter="8" Command="{Binding SetMarkerCommand}" />
+        <KeyBinding Key="NumPad9"  CommandParameter="9" Command="{Binding SetMarkerCommand}" />
+    </Window.InputBindings>
+</Window>
