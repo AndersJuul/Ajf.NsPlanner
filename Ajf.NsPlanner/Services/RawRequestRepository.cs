@@ -13,13 +13,9 @@ namespace Ajf.NsPlanner.UI.Services
 {
     public class RawRequestRepository : IRawRequestRepository
     {
-        public IEnumerable<RequestDto> List()
+        public IEnumerable<RequestDto> List(string fileName)
         {
-            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            var nsFolderPath = Path.Combine(folderPath, "NsPlanner");
-            var csvFilePath = Path.Combine(nsFolderPath, "requestfile.csv");
-
-            Directory.CreateDirectory(nsFolderPath);
+            var csvFilePath = Path.Combine(fileName);
 
             using (var reader = new StreamReader(csvFilePath, Encoding.UTF8))
             {

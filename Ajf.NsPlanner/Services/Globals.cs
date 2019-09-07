@@ -9,6 +9,9 @@ namespace Ajf.NsPlanner.UI.Services
         {
             var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var nsFolderPath = Path.Combine(folderPath, "NsPlanner");
+
+            Directory.CreateDirectory(nsFolderPath);
+
             return nsFolderPath;
         }
     }

@@ -5,6 +5,6 @@ namespace Ajf.NsPlanner.UI.Abstractions
 {
     public interface IRawRequestRepository
     {
-        IEnumerable<RequestDto> List();
+        IEnumerable<RequestDto> List(string fileName);
     }
 }
