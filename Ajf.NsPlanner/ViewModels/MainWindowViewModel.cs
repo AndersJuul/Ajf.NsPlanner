@@ -17,7 +17,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
         private readonly IRawRequestRepository _rawRequestRepository;
         private readonly IRepository _repository;
         private ICommand _exitCommand;
-        private ICommand _getLatestRawCommand;
         private RequestedDialog _requestedDialog;
 
         public MainWindowViewModel(IPeriodSelectionViewModel periodSelectionViewModel,
@@ -49,9 +48,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
                                    ? "Ingen periode valgt"
                                    : PeriodSelectionViewModel.SelectedPeriod.DateRange.ToString());
 
-        public ICommand GetLatestRawCommand => null;
 
-        //_getLatestRawCommand ?? (_getLatestRawCommand = new RelayCommand(GetLatestRaw));
         public IImportLatestRawCommand ImportLatestRawCommand { get; }
         public IStartAssignmentCounselorCommand StartAssignmentCounselorCommand { get; }
         public ICommand ExitCommand => null; //_exitCommand ?? (_exitCommand = new RelayCommand(Exit));

@@ -20,7 +20,6 @@
 
         <Menu Grid.ColumnSpan="2" Margin="0,0,99,0">
             <MenuItem Header="Fil" >
-                <MenuItem Header="Opdatér fra Google Drive" Command="{Binding GetLatestRawCommand}" CommandParameter="{Binding}"/>
                 <MenuItem Header="Opdatér ønsker fra CSV" Command="{Binding ImportLatestRawCommand}" CommandParameter="{Binding}" />
                 <MenuItem Header="Afslut" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=MainWindow1}"/>
             </MenuItem>
