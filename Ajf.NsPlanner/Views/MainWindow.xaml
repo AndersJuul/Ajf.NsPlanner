@@ -62,6 +62,8 @@
                     <CheckBox Content="Skjul delvist specifierede" IsChecked="{Binding AssignmentsViewModel.FilterHidePartlySpecified}"></CheckBox>
                     <Label Content="Mærke" />
                     <TextBox Text="{Binding AssignmentsViewModel.FilterMark}"></TextBox>
+                    <Label Content="Ønsket arrangement" />
+                    <TextBox Text="{Binding AssignmentsViewModel.FilterDesire}"></TextBox>
                 </StackPanel>
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>

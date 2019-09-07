@@ -19,6 +19,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         private bool _filterHidePartlySpecified;
         private string _target;
         private string _filterMark;
+        private string _filterDesire;
         public string Title => "Tildelinger";
 
         public string Target
@@ -78,12 +79,23 @@ namespace Ajf.NsPlanner.UI.ViewModels
                 ReloadAssignmentsFromDb();
             }
         }
+
         public string FilterMark
         {
             get => _filterMark;
             set
             {
-                _filterMark= value;
+                _filterMark = value;
+                OnPropertyChanged();
+                ReloadAssignmentsFromDb();
+            }
+        }
+        public string FilterDesire
+        {
+            get => _filterDesire;
+            set
+            {
+                _filterDesire = value;
                 OnPropertyChanged();
                 ReloadAssignmentsFromDb();
             }
@@ -117,9 +129,12 @@ namespace Ajf.NsPlanner.UI.ViewModels
             if (FilterHidePartlySpecified)
                 funcs.Add(x => x.Where(xx => xx.SpecificationStatus != SpecificationStatus.PartlySpecified));
 
-            if(!string.IsNullOrEmpty(FilterMark))
-                funcs.Add( x=> x.Where(xx=>FilterMark.Contains( xx.Marker)));
-            
+            if (!string.IsNullOrEmpty(FilterMark))
+                funcs.Add(x => x.Where(xx => FilterMark.Contains(xx.Marker)));
+
+            if (!string.IsNullOrEmpty(FilterDesire))
+                funcs.Add(x => x.Where(xx => xx.EventRequest.DesiredEvent.Contains(FilterDesire)));
+
             return Target == null
                 ? new Assignment[] { }
                 : _dispatcher.Dispatch(new FindAssignmentsByTargetQuery(Target,funcs));
