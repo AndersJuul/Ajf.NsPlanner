@@ -7,6 +7,7 @@ using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.CommandHandlers;
 using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Application.Dtos;
+using Ajf.NsPlanner.Application.Queries;
 using Ajf.NsPlanner.Application.QueryHandlers;
 using Ajf.NsPlanner.Domain.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
@@ -82,11 +83,27 @@ namespace Ajf.NsPlanner.UI
             Environment.Exit(0);
         }
 
-        private void App_Startup(object sender, StartupEventArgs e)
+        private void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+
+            AddDatabaseConnection(services);
+            AddViewModels(services);
+            AddUiCommands(services);
+            AddAutoMapping(services);
+
+            AddDomainEventHandlers(services);
+
+            AddApplicationCommandHandlers(services);
+            AddApplicationQueryHandlers(services);
+
+            services.AddSingleton<IRawRequestRepository, RawRequestRepository>();
+            services.AddSingleton<IDispatcher, Dispatcher>();
+
+            AddWindows(services);
         }
 
-        private void ConfigureServices(IServiceCollection services)
+        private static void AddAutoMapping(IServiceCollection services)
         {
             var config = new MapperConfiguration(cfg =>
                 {
@@ -98,52 +115,34 @@ namespace Ajf.NsPlanner.UI
             );
 
             var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+        }
 
-            //optionsBuilder.UseSqlServer("Server=juulserver2019a\\sqlexpress;Database=nsplanner;Trusted_Connection=True;MultipleActiveResultSets=true");
+        private static void AddWindows(IServiceCollection services)
+        {
+            services.AddTransient(typeof(MainWindow));
+            services.AddTransient(typeof(EditDatesWindow));
+            services.AddTransient(typeof(StatsAcceptedRejectedWindow));
+            services.AddTransient(typeof(StatsEmailAddressesWindow));
+            services.AddTransient(typeof(StatsSchoolWindow));
+        }
 
-            var dbFilePath = Path.Combine(Globals.NsFolderPath(), "NsPlanner.mdf");
-            Directory.CreateDirectory(Globals.NsFolderPath());
+        private static void AddApplicationQueryHandlers(IServiceCollection services)
+        {
+            services.AddScoped<IQueryHandler<FindPeriodsQuery, Period[]>, FindUsersBySearchTextQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<FindAssignmentsByTargetQuery, Assignment[]>, FindAssignmentsByPeriodQueryHandler>();
+            services.AddScoped<IQueryHandler<ListAvailableDatesQuery, AvailableDate[]>, ListAvailableDatesQueryHandler>();
+            services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
+            services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
+            services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<ImportConsequenceQuery, ImportConsequenceDto>, ImportConsequenceQueryHandler
+                >();
+        }
 
-            var connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Database=nsplanner;AttachDbFilename=" +
-                                   dbFilePath + ";Integrated Security=True;Connect Timeout=30";
-
-            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
-
-            var s = services.BuildServiceProvider();
-            services.AddScoped(c => c.CreateScope().ServiceProvider);
-
-            services.AddScoped<AppDbContext, AppDbContext>();
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddSingleton<IMainWindowViewModel, MainWindowViewModel>();
-            services.AddSingleton<IAssignmentsViewModel, AssignmentsViewModel>();
-            services.AddSingleton<IPeriodSelectionViewModel, PeriodSelectionViewModel>();
-            services.AddSingleton<IEditDatesViewModel, EditDatesViewModel>();
-            services.AddSingleton<IStatsAcceptedRejectedViewModel, StatsAcceptedRejectedViewModel>();
-            services.AddSingleton<IStatsEmailAddressesViewModel, StatsEmailAddressesViewModel>();
-            services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
-
-            services.AddSingleton<IHandle<PeriodCreatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
-            services.AddSingleton<IHandle<PeriodDeletedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
-            services.AddSingleton<IHandle<PeriodUpdatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
-            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IAssignmentsViewModel>());
-            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsAcceptedRejectedViewModel>());
-            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsSchoolsViewModel>());
-            services.AddSingleton<IHandle<AvailableDateUpdatedEvent>>(c => c.GetService<IEditDatesViewModel>());
-
-            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-            services.AddScoped<IRepository, EfRepository>();
-
-            // UI Commands
-            //        //    //        cfg.For<ISchoolEventImportService>().Use<SchoolEventImportService>();
-            //        //    //        cfg.For<IGoogleFileService>().Use<GoogleFileService>();
-            services.AddScoped<INewPeriodCommand, NewPeriodCommand>();
-            services.AddScoped<IDeletePeriodCommand, DeletePeriodCommand>();
-            services.AddScoped<IImportLatestRawCommand, ImportLatestRawCommand>();
-            services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
-            services.AddScoped<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
-            services.AddScoped<ISetMarkerCommand, SetMarkerCommand>();
-
-            // Application command handlers
+        private static void AddApplicationCommandHandlers(IServiceCollection services)
+        {
             services.AddScoped<ICommandHandler<AddPeriodCommand>, AddPeriodCommandHandler>();
             services
                 .AddScoped<ICommandHandler<Ajf.NsPlanner.Application.Commands.DeletePeriodCommand>,
@@ -154,26 +153,52 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<ICommandHandler<ToggleAvailableDateXCommand>, ToggleAvailableDateXCommandHandler>();
             services.AddScoped<ICommandHandler<AddAvailableDatesCommand>, AddAvailableDatesCommandHandler>();
             services.AddScoped<ICommandHandler<SetMarkerOnAssignmentCommand>, SetMarkerOnAssignmentCommandHandler>();
-            
+        }
+
+        private static void AddUiCommands(IServiceCollection services)
+        {
+            services.AddScoped<INewPeriodCommand, NewPeriodCommand>();
+            services.AddScoped<IDeletePeriodCommand, DeletePeriodCommand>();
+            services.AddScoped<IImportLatestRawCommand, ImportLatestRawCommand>();
+            services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
+            services.AddScoped<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
+            services.AddScoped<ISetMarkerCommand, SetMarkerCommand>();
+        }
+
+        private static void AddDomainEventHandlers(IServiceCollection services)
+        {
+            services.AddSingleton<IHandle<PeriodCreatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
+            services.AddSingleton<IHandle<PeriodDeletedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
+            services.AddSingleton<IHandle<PeriodUpdatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
+            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IAssignmentsViewModel>());
+            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsAcceptedRejectedViewModel>());
+            services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsSchoolsViewModel>());
+            services.AddSingleton<IHandle<AvailableDateUpdatedEvent>>(c => c.GetService<IEditDatesViewModel>());
+
+            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        }
+
+        private static void AddViewModels(IServiceCollection services)
+        {
+            services.AddSingleton<IMainWindowViewModel, MainWindowViewModel>();
+            services.AddSingleton<IAssignmentsViewModel, AssignmentsViewModel>();
+            services.AddSingleton<IPeriodSelectionViewModel, PeriodSelectionViewModel>();
+            services.AddSingleton<IEditDatesViewModel, EditDatesViewModel>();
+            services.AddSingleton<IStatsAcceptedRejectedViewModel, StatsAcceptedRejectedViewModel>();
+            services.AddSingleton<IStatsEmailAddressesViewModel, StatsEmailAddressesViewModel>();
+            services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
+        }
+
+        private static void AddDatabaseConnection(IServiceCollection services)
+        {
+            var dbFilePath = Path.Combine(Globals.NsFolderPath(), "NsPlanner.mdf");
+            var connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Database=nsplanner;AttachDbFilename=" +
+                                   dbFilePath + ";Integrated Security=True;Connect Timeout=30";
+            services.AddScoped<AppDbContext, AppDbContext>();
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
             services.AddScoped<IUnitOfWork>(c => c.GetService<AppDbContext>());
-            services.AddSingleton(mapper);
-
-            services.AddScoped<IQueryHandler<FindPeriodsQuery, Period[]>, FindUsersBySearchTextQueryHandler>();
-            services.AddScoped<IQueryHandler<FindAssignmentsByTargetQuery, Assignment[]>,FindAssignmentsByPeriodQueryHandler>();
-            services.AddScoped<IQueryHandler<ListAvailableDatesQuery, AvailableDate[]>, ListAvailableDatesQueryHandler>();
-            services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
-            services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
-            services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
-
-            services.AddSingleton<IRawRequestRepository, RawRequestRepository>();
-
-            services.AddSingleton<IDispatcher, Dispatcher>();
-
-            services.AddTransient(typeof(MainWindow));
-            services.AddTransient(typeof(EditDatesWindow));
-            services.AddTransient(typeof(StatsAcceptedRejectedWindow));
-            services.AddTransient(typeof(StatsEmailAddressesWindow));
-            services.AddTransient(typeof(StatsSchoolWindow));
+            services.AddScoped<IRepository, EfRepository>();
         }
     }
 }
