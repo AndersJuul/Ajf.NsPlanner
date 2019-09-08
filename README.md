@@ -5,10 +5,14 @@ Programmet er open source og må kopieres i sin helhed eller blot i de dele, der
 Programmet er inspireret af konstruktioner fra Steve Smith (https://ardalis.com), Vladimir Khorikov (https://enterprisecraftsmanship.com/) og Eric Evans (http://domainlanguage.com/)
 
 ## Use Cases
+### Indlæsning af ønsker
+Som tildeler ønsker jeg at kunne indlæse en csv-fil med ønsker, som feks den som idag kan opdateres fra indtastningsformularen på google drive.
 ### Visning af ønsker
 Som tildeler ønsker jeg at kunne se en oversigt over indsendte ønsker og kunne sortere efter kolonner
+### Markering af ønsker
+Som tildeler ønsker jeg at kunne sætte 'mærker' på enkelte ønsker for at markere intentionen med dem -- skal de have julearrangement, er de tidligere sæsoner blevet forfordelt eller anden markering.
 ### Filtrering af ønsker
-Som tildeler ønsker jeg at kunne filtrere ønsker således at kun et sub-set af ønskerne vises
+Som tildeler ønsker jeg at kunne filtrere ønsker således at kun et sub-set af ønskerne vises. Der skal kunne filtereres på rækker på basis af tildelingsstatus, mærker og ønsket arrangement
 
 ## Ubiquitous Language (nouns)
 ### Ønske (EventRequest)
