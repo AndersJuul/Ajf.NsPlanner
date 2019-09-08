@@ -13,7 +13,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
-        private readonly IGoogleFileService _googleFileService;
         private readonly IRawRequestRepository _rawRequestRepository;
         private readonly IRepository _repository;
         private ICommand _exitCommand;

@@ -9,7 +9,7 @@ namespace Ajf.NsPlanner.Application.QueryHandlers
     {
         public ImportConsequenceDto Handle(ImportConsequenceQuery query)
         {
-            throw new NotImplementedException();
+            return new ImportConsequenceDto();
         }
     }
 }
