@@ -6,20 +6,24 @@ namespace Ajf.NsPlanner.Domain.Entities
 {
     public class AvailableDate : AggregateRoot
     {
-        public AvailableDate(DateTime date, Guid periodId)
+        private AvailableDate()
+        {
+        }
+
+        internal AvailableDate(DateTime date, Period period)
         {
             Date = date;
-            PeriodId = periodId;
+            Period = period;
         }
 
         public DateTime Date { get; protected set; }
-        public Guid PeriodId { get; protected set; }
 
         public DateAvailability DateAvailability { get; protected set; }
+        public Period Period { get; protected set; }
 
-        public static AvailableDate Create(in DateTime date, Guid periodId)
+        public static AvailableDate Create(in DateTime date, Period period)
         {
-            return new AvailableDate(date, periodId);
+            return new AvailableDate(date, period);
         }
 
         public void Toggle()
@@ -33,7 +37,7 @@ namespace Ajf.NsPlanner.Domain.Entities
 
         public void UpdateFrom(AvailableDate availableDate)
         {
-            DateAvailability= availableDate.DateAvailability;
+            DateAvailability = availableDate.DateAvailability;
         }
     }
 }

@@ -4,14 +4,16 @@ using Ajf.NsPlanner.Infrastructure.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190909164650_table-relations9")]
+    partial class tablerelations9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +24,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
             modelBuilder.Entity("Ajf.NsPlanner.Domain.Entities.Assignment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -32,6 +35,9 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("DateTimeOfStart")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EventRequestId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Marker")
                         .HasColumnType("nvarchar(max)");
@@ -48,6 +54,8 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CounselorId");
+
+                    b.HasIndex("EventRequestId");
 
                     b.HasIndex("PlaceId");
 
@@ -140,7 +148,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
                     b.Property<string>("ParticipantsNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PeriodId")
+                    b.Property<Guid?>("PeriodId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SchoolInstituteName")
@@ -163,13 +171,9 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Target")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Target")
-                        .IsUnique()
-                        .HasFilter("[Target] IS NOT NULL");
 
                     b.ToTable("Periods");
                 });
@@ -206,10 +210,8 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
                         .HasForeignKey("CounselorId");
 
                     b.HasOne("Ajf.NsPlanner.Domain.Entities.EventRequest", "EventRequest")
-                        .WithOne()
-                        .HasForeignKey("Ajf.NsPlanner.Domain.Entities.Assignment", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("EventRequestId");
 
                     b.HasOne("Ajf.NsPlanner.Domain.Entities.Place", "Place")
                         .WithMany()
@@ -233,8 +235,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Migrations
                     b.HasOne("Ajf.NsPlanner.Domain.Entities.Period", "Period")
                         .WithMany()
                         .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Ajf.NsPlanner.Domain.Entities.Period", b =>

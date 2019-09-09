@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Domain.Abstractions;
@@ -25,6 +26,7 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
         public Result Handle(ImportRequestsCommand command)
         {
             var existingEventRequests = _repository.List<EventRequest>();
+            var periods = _repository.List<Period>();
 
             // For each: Insert if it's new; update existing if it has been seen before.
             foreach (var requestDto in command.RequestDtos)
@@ -34,11 +36,23 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
                 if (existing == null)
                 {
                     var eventRequest = _mapper.Map<EventRequest>(requestDto);
+                    var period = periods.SingleOrDefault(x => x.Target == eventRequest.DesiredWhen);
+                    if (period == null)
+                    {
+                        period = Period.Create(DateRange.Create(DateTime.Today, DateTime.Today),  eventRequest.DesiredWhen);
+                        period.Events.Add(new PeriodCreatedEvent(period));
+                        
+                        _repository.Add(period);
+                        periods.Add(period);
+                    }
+
+                    eventRequest.Period = period;
                     _repository.Add(eventRequest);
                     eventRequest.Events.Add(new EventRequestCreatedEvent(eventRequest));
 
                     var assignment = Assignment.Create(eventRequest);
                     _repository.Add(assignment);
+                    assignment.EventRequest = eventRequest;
                     eventRequest.Events.Add(new AssignmentCreatedEvent(assignment));
                 }
                 else

@@ -80,6 +80,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
             Months.Clear();
             Dates.Clear();
 
+            if(SelectedPeriod==null)
+                return;
+
             var selectedPeriodId = SelectedPeriod.Id;
 
             // Ensure all dates are covered
@@ -92,7 +95,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             {
                 var date = SelectedPeriod.DateRange.Start.AddDays(i);
                 if (existingAvailableDates.All(x => x.Date != date))
-                    availableDatesToCreate.Add(AvailableDate.Create(date, selectedPeriodId));
+                    availableDatesToCreate.Add(SelectedPeriod.Model.CreateAvailableDate(date));
             }
 
             _dispatcher.Dispatch(new AddAvailableDatesCommand(availableDatesToCreate));

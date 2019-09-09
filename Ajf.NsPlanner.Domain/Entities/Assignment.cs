@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
@@ -7,11 +8,11 @@ namespace Ajf.NsPlanner.Domain.Entities
     {
         private Counselor _counselor;
 
-        private Assignment(EventRequest eventRequest)
-        {
-            EventRequest = eventRequest;
-            SpecificationStatus = Recalculate();
-        }
+        //private Assignment(EventRequest eventRequest)
+        //{
+        //    EventRequest = eventRequest;
+        //    SpecificationStatus = Recalculate();
+        //}
 
         private Assignment()
         {
@@ -54,17 +55,21 @@ namespace Ajf.NsPlanner.Domain.Entities
 
         public static Assignment Create(EventRequest newEventRequest)
         {
-            var assignment = new Assignment(newEventRequest);
+            var assignment = new Assignment
+            {
+                EventRequest = newEventRequest
+            };
             return assignment;
         }
 
         public Assignment Clone()
         {
-            var assignment = new Assignment(EventRequest)
-            {
-                Id = Id
-            };
-            return assignment;
+            throw new NotImplementedException();
+            //var assignment = new Assignment(EventRequest)
+            //{
+            //    Id = Id
+            //};
+            //return assignment;
         }
 
         public void UpdateFrom(Assignment assignment)

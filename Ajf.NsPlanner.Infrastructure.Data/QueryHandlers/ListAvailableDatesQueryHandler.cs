@@ -18,7 +18,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.QueryHandlers
         {
             return (
                     from availableDate in _appDbContext.AvailableDates
-                    where availableDate.PeriodId==query.PeriodId
+                    where availableDate.Period.Id==query.PeriodId
                     select availableDate)
                 .ToArray();
         }

@@ -1,4 +1,5 @@
-﻿using Ajf.NsPlanner.Domain.SharedKernel;
+﻿using System.ComponentModel.DataAnnotations;
+using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
 {
@@ -9,6 +10,8 @@ namespace Ajf.NsPlanner.Domain.Entities
             TimeStamp = timeStamp;
             ContactName = contactName;
         }
+
+        public Period Period { get; set; }
 
         private EventRequest()
         {

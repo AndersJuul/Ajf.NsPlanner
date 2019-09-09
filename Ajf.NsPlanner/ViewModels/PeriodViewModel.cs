@@ -8,23 +8,23 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class PeriodViewModel : ViewModel, IPeriodViewModel
     {
-        private readonly Period _period;
         private readonly IDispatcher _dispatcher;
 
         public PeriodViewModel(Period period, IDispatcher dispatcher)
         {
-            _period = period;
+            Model = period;
             _dispatcher = dispatcher;
         }
 
-        public DateRangeViewModel DateRange => DateRangeViewModel.Create(_period.DateRange);
+        public DateRangeViewModel DateRange => DateRangeViewModel.Create(Model.DateRange);
+        public Period Model { get; }
 
         public DateTime Start
         {
-            get => _period.DateRange.Start;
+            get => Model.DateRange.Start;
             set
             {
-                _period.DateRange = Ajf.NsPlanner.Domain.Entities.DateRange.Create(value, End);
+                Model.DateRange = Ajf.NsPlanner.Domain.Entities.DateRange.Create(value, End);
 
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DateRange));
@@ -34,10 +34,10 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public DateTime End
         {
-            get => _period.DateRange.End;
+            get => Model.DateRange.End;
             set
             {
-                _period.DateRange = Ajf.NsPlanner.Domain.Entities.DateRange.Create(Start, value);
+                Model.DateRange = Ajf.NsPlanner.Domain.Entities.DateRange.Create(Start, value);
 
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DateRange));
@@ -46,7 +46,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         }
 
         public string Title => DateTime.Now.ToLongTimeString();
-        public Guid Id => _period.Id;
+        public Guid Id => Model.Id;
 
         public void NotifyIsCurrentSelection()
         {
@@ -55,21 +55,21 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public void Save()
         {
-            _dispatcher.Dispatch(new UpdatePeriodCommand(_period));
+            _dispatcher.Dispatch(new UpdatePeriodCommand(Model));
         }
 
         public IPeriodViewModel Clone()
         {
-            var periodClone=_period.Clone();
+            var periodClone=Model.Clone();
             return new PeriodViewModel(periodClone, _dispatcher);
         }
 
         public string Target
         {
-            get => _period.Target;
+            get => Model.Target;
             set
             {
-                _period.Target = value;
+                Model.Target = value;
 
                 OnPropertyChanged();
             }
@@ -77,10 +77,10 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public void ModelUpdate(Period period)
         {
-            if (_period.Id != period.Id)
+            if (Model.Id != period.Id)
                 throw new ArgumentException("Can't update by strange period");
 
-            _period.UpdateFrom(period);
+            Model.UpdateFrom(period);
 
             OnPropertyChanged(nameof(Start));
             OnPropertyChanged(nameof(End));

@@ -31,7 +31,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Data
         public Guid Id { get; }
         public DbSet<Counselor> Counselors { get; set; }
         public DbSet<Period> Periods { get; set; }
-        public DbSet<EventRequest> EventRequests { get; set; }
+        //public DbSet<EventRequest> EventRequests { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<AvailableDate> AvailableDates { get; set; }
 
@@ -73,6 +73,8 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new PeriodConfiguration());
+            builder.ApplyConfiguration(new EventRequestConfiguration());
+            builder.ApplyConfiguration(new AssignmentConfiguration());
         }
     }
 }

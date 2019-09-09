@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.UI.Abstractions;
@@ -37,7 +38,11 @@ namespace Ajf.NsPlanner.UI.Commands
                 var fileName = openFileDialog.FileName;
                 var requestDtos = _rawRequestRepository.List(fileName).ToArray();
 
-                _dispatcher.Dispatch(new ImportRequestsCommand(requestDtos));
+                var result = _dispatcher.Dispatch(new ImportRequestsCommand(requestDtos));
+                if (result.IsFailure)
+                {
+                    MessageBox.Show("Kunne ikke indlæse rådata", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ajf.NsPlanner.Domain.SharedKernel
 {
@@ -10,6 +11,8 @@ namespace Ajf.NsPlanner.Domain.SharedKernel
         {
             Id = Guid.NewGuid();
         }
+
+        [Key]
         public Guid Id { get; protected set; }
 
         public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();

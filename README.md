@@ -6,13 +6,24 @@ Programmet er inspireret af konstruktioner fra Steve Smith (https://ardalis.com)
 
 ## Use Cases
 ### Indlæsning af ønsker
-Som tildeler ønsker jeg at kunne indlæse en csv-fil med ønsker, som feks den som idag kan opdateres fra indtastningsformularen på google drive.
+
+Som tildeler ønsker jeg at kunne indlæse en csv-fil med ønsker, som feks den som idag kan opdateres fra indtastningsformularen på google drive. Ved indlæsning skal perioder oprettes efter behov. Hvis perioden for et ønske allerede findes men er lukket vil ønsket blive ignoreret.
+
+### Oprydning af ønsker
+
+Som .
+
 ### Visning af ønsker
 Som tildeler ønsker jeg at kunne se en oversigt over indsendte ønsker og kunne sortere efter kolonner
 ### Markering af ønsker
 Som tildeler ønsker jeg at kunne sætte 'mærker' på enkelte ønsker for at markere intentionen med dem -- skal de have julearrangement, er de tidligere sæsoner blevet forfordelt eller anden markering.
 ### Filtrering af ønsker
+
 Som tildeler ønsker jeg at kunne filtrere ønsker således at kun et sub-set af ønskerne vises. Der skal kunne filtereres på rækker på basis af tildelingsstatus, mærker og ønsket arrangement
+
+### Lukning af perioder
+
+Som tildeler ønsker jeg at kunne lukke en periode således at alle registrerede ønsker og arrangementer slettes fra databasen for den pågældende periode. Ved indlæsning af ønsker vil evt ønsker for en lukket periode blive ignoreret.
 
 ## Ubiquitous Language (nouns, engelske gloser er benævnelsen i koden)
 ### Ønske (EventRequest)
@@ -51,3 +62,12 @@ Et simpelt mærke som kan sættes på et ønske og derefter bruges til at filter
 ### Tildele arrangement
 At knytte en Naturvejleder, et Sted og et Arrangement og et Afholdelsestidspunkt til et Ønske.
 
+### Lukke en periode
+
+Handlingen, når man ønsker at fjerne alle registreringer for en periode. Alle ønsker og tildelinger fjernes når en periode lukkes og ved indlæsning af nye ønsker vil ønsker for en lukket periode blive ignoreret.
+
+## GDPR
+
+Ønsker og tildelinger gemmes i databasen og opbevares indtil de aktivt slettes ved lukning af en periode. En periode vil normalt holdes åben indtil ønsker er behandlet for den efterfølgende periode.
+
+Eksempelvis vil en tildeler i sommeren 2019 behandle ønsker for efteråret 2019. Tildeleren vil i vinteren 2019/2020 tildele behandle ønsker for foråret 2020. Når der er udsendt mails om tildelte arrangementer for foråret 2020 vil tildeleren slette perioden 'efterår 2019' hvorved alle registreringer i databasen slettes for denne periode.

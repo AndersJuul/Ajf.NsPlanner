@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
@@ -35,6 +36,11 @@ namespace Ajf.NsPlanner.Domain.Entities
                 Id = Id
             };
             return period;
+        }
+
+        public AvailableDate CreateAvailableDate(in DateTime date)
+        {
+            return  AvailableDate.Create(date, this);
         }
     }
 }

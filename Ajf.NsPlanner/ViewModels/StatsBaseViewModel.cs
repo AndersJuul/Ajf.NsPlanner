@@ -100,7 +100,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         private Assignment[] GetCurrentAssignments()
         {
-            return SelectedPeriod.Target == null
+            return SelectedPeriod?.Target == null
                 ? new Assignment[] { }
                 : _dispatcher
                     .Dispatch(

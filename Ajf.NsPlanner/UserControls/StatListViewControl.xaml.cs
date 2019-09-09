@@ -23,6 +23,9 @@ namespace Ajf.NsPlanner.UI.UserControls
             var gridView = ListView.View as GridView;
             gridView.Columns.Clear();
 
+            if(m.SelectedPeriod==null)
+                return;
+
             foreach (DataColumn column in m.StatTable.DataTable.Columns)
             {
                 var gridViewColumn = new GridViewColumn
