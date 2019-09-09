@@ -32,6 +32,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Data
             builder
                 .HasMany<AvailableDate>()
                 .WithOne(a => a.Period)
+                .IsRequired()
                 .HasPrincipalKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Cascade);
         }

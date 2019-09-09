@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Ajf.NsPlanner.Domain.SharedKernel;
+﻿using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
 {
