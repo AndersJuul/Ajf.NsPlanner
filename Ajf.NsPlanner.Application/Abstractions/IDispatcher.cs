@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Ajf.NsPlanner.Domain.Abstractions;
+﻿using Ajf.NsPlanner.Domain.Abstractions;
 using CSharpFunctionalExtensions;
 
 namespace Ajf.NsPlanner.Application.Abstractions

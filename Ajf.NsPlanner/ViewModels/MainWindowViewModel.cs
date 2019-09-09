@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using Ajf.NsPlanner.Application.Abstractions;
-using Ajf.NsPlanner.Application.CommandHandlers;
-using Ajf.NsPlanner.Domain.Abstractions;
 using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.Domain.Queries;
 using Ajf.NsPlanner.UI.Abstractions;
@@ -13,20 +11,18 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
-        private readonly IRawRequestRepository _rawRequestRepository;
-        private readonly IRepository _repository;
         private ICommand _exitCommand;
         private RequestedDialog _requestedDialog;
+        private string _close;
 
         public MainWindowViewModel(IPeriodSelectionViewModel periodSelectionViewModel,
-            IAssignmentsViewModel assignmentsViewModel,
-            IRepository repository, IImportLatestRawCommand importLatestRawCommand,
+            IAssignmentsViewModel assignmentsViewModel, IImportLatestRawCommand importLatestRawCommand,
             IStartAssignmentCounselorCommand startAssignmentCounselorCommand, IDispatcher dispatcher,
             IEditDatesViewModel editDatesViewModel,
-            IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel, IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
+            IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel,
+            IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
             ISetMarkerCommand setMarkerCommand)
         {
-            _repository = repository;
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
             EditDatesViewModel = editDatesViewModel;
@@ -50,7 +46,12 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public IImportLatestRawCommand ImportLatestRawCommand { get; }
         public IStartAssignmentCounselorCommand StartAssignmentCounselorCommand { get; }
-        public ICommand ExitCommand => null; //_exitCommand ?? (_exitCommand = new RelayCommand(Exit));
+        public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
+
+        private void Exit(object obj)
+        {
+            Close = "Close window";
+        }
 
         public IStatsAcceptedRejectedViewModel StatsAcceptedRejectedViewModel { get; }
         public IStatsEmailAddressesViewModel StatsEmailAddressesViewModel { get; }
@@ -103,12 +104,14 @@ namespace Ajf.NsPlanner.UI.ViewModels
             }
         }
 
-        private void GetLatestRaw(object o)
+        public string Close
         {
-            //_googleFileService.DownloadFile(_nsPlannerSettings.RequestFileId,
-            //    _nsPlannerSettings.DataFileRawRequestFile);
-
-            //var all = _rawRequestRepository.GetAll();
+            get => _close;
+            set
+            {
+                _close = value; 
+                OnPropertyChanged();
+            }
         }
     }
 }

@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.Commands;
-using Ajf.NsPlanner.Application.Queries;
 using Ajf.NsPlanner.UI.Abstractions;
 using Ajf.NsPlanner.UI.Commands.Base;
 using Microsoft.Win32;
 
 namespace Ajf.NsPlanner.UI.Commands
 {
-    public class ImportLatestRawCommand :BaseCommand, IImportLatestRawCommand
+    public class ImportLatestRawCommand : BaseCommand, IImportLatestRawCommand
     {
-        private readonly IRawRequestRepository _rawRequestRepository;
         private readonly IDispatcher _dispatcher;
+        private readonly IRawRequestRepository _rawRequestRepository;
 
         public ImportLatestRawCommand(IRawRequestRepository rawRequestRepository, IDispatcher dispatcher)
         {
             _rawRequestRepository = rawRequestRepository;
             _dispatcher = dispatcher;
         }
+
         public override bool CanExecute(object parameter)
         {
             return true;
@@ -29,24 +28,17 @@ namespace Ajf.NsPlanner.UI.Commands
         {
             try
             {
-                var openFileDialog = new OpenFileDialog(){Multiselect = false};
+                var openFileDialog = new OpenFileDialog {Multiselect = false};
                 var showDialog = openFileDialog.ShowDialog();
 
-                if(!showDialog.HasValue|| !showDialog.Value)
+                if (!showDialog.HasValue || !showDialog.Value)
                     return;
 
                 var fileName = openFileDialog.FileName;
                 var requestDtos = _rawRequestRepository.List(fileName).ToArray();
 
-                var importConsequence = _dispatcher.Dispatch(new ImportConsequenceQuery(requestDtos));
-
-                if (MessageBox.Show("Hello world")!=MessageBoxResult.OK)
-                {
-                    return;
-                }
-
                 _dispatcher.Dispatch(new ImportRequestsCommand(requestDtos));
-            }   
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e);

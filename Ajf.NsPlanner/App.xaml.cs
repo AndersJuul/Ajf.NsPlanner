@@ -7,7 +7,6 @@ using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.CommandHandlers;
 using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Application.Dtos;
-using Ajf.NsPlanner.Application.Queries;
 using Ajf.NsPlanner.Application.QueryHandlers;
 using Ajf.NsPlanner.Domain.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
@@ -136,9 +135,6 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
             services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
             services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
-            services
-                .AddScoped<IQueryHandler<ImportConsequenceQuery, ImportConsequenceDto>, ImportConsequenceQueryHandler
-                >();
         }
 
         private static void AddApplicationCommandHandlers(IServiceCollection services)

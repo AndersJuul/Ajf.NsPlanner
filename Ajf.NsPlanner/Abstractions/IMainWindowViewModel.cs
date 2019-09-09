@@ -6,7 +6,7 @@ using Ajf.NsPlanner.UI.Views;
 
 namespace Ajf.NsPlanner.UI.Abstractions
 {
-    public interface IMainWindowViewModel:IViewModel, IHandle<AssignmentCreatedEvent>, IHandle<EventRequestUpdatedEvent>
+    public interface IMainWindowViewModel:IViewModel, IHandle<AssignmentCreatedEvent>, IHandle<EventRequestUpdatedEvent>, ICloseWindow
     {
         IPeriodSelectionViewModel PeriodSelectionViewModel { get; set; }
         IAssignmentsViewModel AssignmentsViewModel { get; }

@@ -25,8 +25,11 @@ namespace Ajf.NsPlanner.UI.Views
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is MainWindowViewModel model)
-                if (e.PropertyName == nameof(MainWindowViewModel.RequestedDialog))
+            if (!(sender is IMainWindowViewModel model)) return;
+
+            switch (e.PropertyName)
+            {
+                case nameof(MainWindowViewModel.RequestedDialog):
                 {
                     Window w = null;
                     if (model.RequestedDialog.Name == "C")
@@ -48,7 +51,12 @@ namespace Ajf.NsPlanner.UI.Views
                         w.ShowDialog();
                     if (model.RequestedDialog.WindowState2 == WindowState2.Show)
                         w.Show();
+                    break;
                 }
+                case nameof(ICloseWindow.Close):
+                    Close();
+                    break;
+            }
         }
 
         private void EditPeriodClick(object sender, RoutedEventArgs e)

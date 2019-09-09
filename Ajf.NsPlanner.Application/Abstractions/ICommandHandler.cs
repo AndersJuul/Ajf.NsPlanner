@@ -7,6 +7,4 @@ namespace Ajf.NsPlanner.Application.Abstractions
     {
         Result Handle(TCommand command);
     }
-
-
 }
