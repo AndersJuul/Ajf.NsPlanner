@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Domain.Abstractions;
@@ -39,7 +38,7 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
                     var period = periods.SingleOrDefault(x => x.Target == eventRequest.DesiredWhen);
                     if (period == null)
                     {
-                        period = Period.Create(DateRange.Create(DateTime.Today, DateTime.Today),  eventRequest.DesiredWhen);
+                        period = Period.Create(eventRequest.DesiredWhen);
                         period.Events.Add(new PeriodCreatedEvent(period));
                         
                         _repository.Add(period);

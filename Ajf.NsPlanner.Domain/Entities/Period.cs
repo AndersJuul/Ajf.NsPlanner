@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
@@ -21,8 +22,17 @@ namespace Ajf.NsPlanner.Domain.Entities
             EventRequests=new List<EventRequest>();
         }
 
-        public static Period Create(DateRange dateRange, string target)
+        public static Period Create(string target)
         {
+            var yearAsString = target.Split(" ").Last();
+            var year = Convert.ToInt32(yearAsString);
+            var isSpring = target.ToLower().Contains("forår");
+            var startMonth = isSpring ? 1 : 7;
+            var endMonth = isSpring ? 6 : 12;
+            var start = new DateTime(year,startMonth,1);
+            var end = new DateTime(year,endMonth,isSpring?30:31);
+            var dateRange =DateRange.Create(start,end);
+
             return new Period(dateRange,target);
         }
 
