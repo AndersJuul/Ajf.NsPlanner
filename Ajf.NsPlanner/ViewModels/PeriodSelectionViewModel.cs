@@ -59,21 +59,22 @@ namespace Ajf.NsPlanner.UI.ViewModels
                 PeriodList.Add(periodViewModel);
             }
 
-            SelectedPeriod = PeriodList.FirstOrDefault();
+            SelectedPeriod = GetFirstPeriodInFuture();
         }
 
-        //public void AddPeriod(Period period)
-        //{
-        //    var vmPeriod = _mapper.Map<PeriodViewModel>(period);
-        //    PeriodList.Add(vmPeriod);
-        //    SelectedPeriod = vmPeriod;
-        //}
+        private PeriodViewModel GetFirstPeriodInFuture()
+        {
+            var firstPeriodInFuture = PeriodList
+                .OrderBy(x => x.Start)
+                .FirstOrDefault(x => x.Start > DateTime.Now);
+            return firstPeriodInFuture;
+        }
 
         public void Handle(PeriodCreatedEvent domainEvent)
         {
             var periodViewModel = new PeriodViewModel(domainEvent.Period, _dispatcher);
             PeriodList.Add(periodViewModel);
-            SelectedPeriod = periodViewModel;
+            SelectedPeriod = GetFirstPeriodInFuture();
         }
 
         public void Handle(PeriodDeletedEvent domainEvent)
@@ -81,7 +82,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             var periodViewModel = PeriodList.SingleOrDefault(x => x.Id == domainEvent.Period.Id);
             if (periodViewModel != null)
                 PeriodList.Remove(periodViewModel);
-            SelectedPeriod = PeriodList.FirstOrDefault();
+            SelectedPeriod = GetFirstPeriodInFuture();
         }
 
         public void Handle(PeriodUpdatedEvent domainEvent)

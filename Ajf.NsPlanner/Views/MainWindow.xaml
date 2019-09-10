@@ -39,13 +39,15 @@
         <DockPanel Grid.Row="1" >
 
             <StackPanel DockPanel.Dock="Left" Width="350">
-                <ListView MinHeight="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                          ItemsSource="{Binding PeriodSelectionViewModel.PeriodList}" SelectedItem="{Binding PeriodSelectionViewModel.SelectedPeriod}" 
-                          BorderBrush="Black">
+                <ListView Name="PeriodListView" MinHeight="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                          ItemsSource="{Binding PeriodSelectionViewModel.PeriodList}" 
+                          SelectedItem="{Binding PeriodSelectionViewModel.SelectedPeriod}" 
+                          services:GridViewSort.AutoSort="True"
+                          BorderBrush="Black" DataContextChanged="PeriodListView_DataContextChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Periode" DisplayMemberBinding="{Binding DateRange}"></GridViewColumn>
-                            <GridViewColumn Header="Target" DisplayMemberBinding="{Binding Target}"></GridViewColumn>
+                            <GridViewColumn Header="Periode" DisplayMemberBinding="{Binding DateRange}" services:GridViewSort.PropertyName="DateRange"></GridViewColumn>
+                            <GridViewColumn Header="Target" DisplayMemberBinding="{Binding Target}" services:GridViewSort.PropertyName="Target"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -92,7 +94,7 @@
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                       SelectedItem="{Binding AssignmentsViewModel.SelectedAssignment}"
                       services:GridViewSort.AutoSort="True"
-                      BorderBrush="Black">
+                      BorderBrush="Black" DataContextChanged="ListView_DataContextChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" services:GridViewColumnVisibilityManager.IsVisible="{Binding AssignmentsViewModel.ShowIdColumn}" ></GridViewColumn>

@@ -53,13 +53,13 @@ namespace Ajf.NsPlanner.UI
             // Build the our IServiceProvider and set our static reference to it
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindowViewModel = ServiceProvider.GetRequiredService<IMainWindowViewModel>();
-
             using (var serviceScope = ServiceProvider.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context1 = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
                 context1.Database.Migrate();
             }
+
+            var mainWindowViewModel = ServiceProvider.GetRequiredService<IMainWindowViewModel>();
 
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.DataContext = mainWindowViewModel;

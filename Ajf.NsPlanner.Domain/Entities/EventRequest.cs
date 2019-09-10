@@ -56,6 +56,8 @@ namespace Ajf.NsPlanner.Domain.Entities
             DesiredDate = source.DesiredDate;
             Comments = source.Comments;
             InstitutionOrSchool = source.InstitutionOrSchool;
+
+            Period = source.Period;
         }
     }
 }

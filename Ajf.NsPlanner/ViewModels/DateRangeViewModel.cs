@@ -40,9 +40,24 @@ namespace Ajf.NsPlanner.UI.ViewModels
             return new DateRangeViewModel(dateRange);
         }
 
+        public int CompareTo(DateRangeViewModel other)
+        {
+            return _dateRange.CompareTo(other._dateRange);
+        }
+
         public override string ToString()
         {
             return Start.ToString("yyyy-MM-dd") + " - " + End.ToString("yyyy-MM-dd");
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is DateRangeViewModel other)
+            {
+                return CompareTo(other);
+            }
+
+            return -1;
         }
     }
 }

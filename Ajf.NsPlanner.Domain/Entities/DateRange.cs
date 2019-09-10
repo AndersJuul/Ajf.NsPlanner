@@ -2,7 +2,7 @@
 
 namespace Ajf.NsPlanner.Domain.Entities
 {
-    public class DateRange
+    public class DateRange:IComparable<DateRange>,IComparable
     {
         private DateRange(DateTime start, DateTime end):this()
         {
@@ -22,6 +22,22 @@ namespace Ajf.NsPlanner.Domain.Entities
         public static DateRange Create(DateTime start, DateTime end)
         {
             return new DateRange(start, end);
+        }
+
+        public int CompareTo(DateRange other)
+        {
+            var compareTo = Start.CompareTo(other.Start);
+            return compareTo != 0 ? compareTo : End.CompareTo(other.End);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is DateRange other)
+            {
+                return CompareTo(other);
+            }
+
+            return -1;
         }
     }
 }

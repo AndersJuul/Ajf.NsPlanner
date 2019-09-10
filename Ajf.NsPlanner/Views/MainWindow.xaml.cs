@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Data;
 using Ajf.NsPlanner.UI.Abstractions;
 using Ajf.NsPlanner.UI.ViewModels;
 
@@ -80,9 +81,30 @@ namespace Ajf.NsPlanner.UI.Views
 
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            var mainWindowViewModel = DataContext as IMainWindowViewModel;
-            if (mainWindowViewModel != null)
+            if (DataContext is IMainWindowViewModel mainWindowViewModel)
                 mainWindowViewModel.OnLoaded();
+        }
+
+        private void PeriodListView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // Initial sort by DateRange
+            if (e.NewValue is IMainWindowViewModel m)
+            {
+                var oc = m.PeriodSelectionViewModel.PeriodList;
+                var view = CollectionViewSource.GetDefaultView(oc);
+                view.SortDescriptions.Add(new SortDescription("DateRange", ListSortDirection.Descending));
+            }
+        }
+
+        private void ListView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // Initial sort by DateRange
+            if (e.NewValue is IMainWindowViewModel m)
+            {
+                var oc = m.AssignmentsViewModel.Items;
+                var view = CollectionViewSource.GetDefaultView(oc);
+                view.SortDescriptions.Add(new SortDescription("TimeStamp", ListSortDirection.Ascending));
+            }
         }
     }
 }

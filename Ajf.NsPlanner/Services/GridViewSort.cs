@@ -1,10 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ajf.NsPlanner.UI.Abstractions;
+using Ajf.NsPlanner.UI.ViewModels;
 
 namespace Ajf.NsPlanner.UI.Services
 {
@@ -166,6 +170,7 @@ namespace Ajf.NsPlanner.UI.Services
                     {
                         var listView = o as ListView;
                         if (listView != null)
+                        {
                             if (GetCommand(listView) == null) // Don't change click handler if a command is set
                             {
                                 var oldValue = (bool) e.OldValue;
@@ -177,6 +182,8 @@ namespace Ajf.NsPlanner.UI.Services
                                     listView.AddHandler(ButtonBase.ClickEvent,
                                         new RoutedEventHandler(ColumnHeader_Click));
                             }
+
+                        }
                     }
                 )
             );

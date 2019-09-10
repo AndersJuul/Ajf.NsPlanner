@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Application.Commands;
+using Ajf.NsPlanner.Application.Dtos;
 using Ajf.NsPlanner.Domain.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
 using Ajf.NsPlanner.Domain.Events;
@@ -32,20 +34,10 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
             {
                 var existing = existingEventRequests.SingleOrDefault(x => x.TimeStamp == requestDto.TimeStamp);
 
+                var eventRequest = GetEventRequest(requestDto, periods);
+
                 if (existing == null)
                 {
-                    var eventRequest = _mapper.Map<EventRequest>(requestDto);
-                    var period = periods.SingleOrDefault(x => x.Target == eventRequest.DesiredWhen);
-                    if (period == null)
-                    {
-                        period = Period.Create(eventRequest.DesiredWhen);
-                        period.Events.Add(new PeriodCreatedEvent(period));
-                        
-                        _repository.Add(period);
-                        periods.Add(period);
-                    }
-
-                    eventRequest.Period = period;
                     _repository.Add(eventRequest);
                     eventRequest.Events.Add(new EventRequestCreatedEvent(eventRequest));
 
@@ -56,8 +48,7 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
                 }
                 else
                 {
-                    var update = _mapper.Map<EventRequest>(requestDto);
-                    existing.UpdateFrom(update);
+                    existing.UpdateFrom(eventRequest);
                     existing.Events.Add(new EventRequestUpdatedEvent(existing));
                     _repository.Update(existing);
                 }
@@ -68,5 +59,21 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
             return Result.Ok();
         }
 
+        private EventRequest GetEventRequest(RequestDto requestDto, List<Period> periods)
+        {
+            var eventRequest = _mapper.Map<EventRequest>(requestDto);
+            var period = periods.SingleOrDefault(x => x.Target == eventRequest.DesiredWhen);
+            if (period == null)
+            {
+                period = Period.Create(eventRequest.DesiredWhen);
+                period.Events.Add(new PeriodCreatedEvent(period));
+
+                _repository.Add(period);
+                periods.Add(period);
+            }
+
+            eventRequest.Period = period;
+            return eventRequest;
+        }
     }
 }
