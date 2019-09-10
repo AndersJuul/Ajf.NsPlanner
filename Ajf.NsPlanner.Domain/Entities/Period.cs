@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
@@ -31,7 +32,10 @@ namespace Ajf.NsPlanner.Domain.Entities
             var end = new DateTime(year,endMonth,isSpring?30:31);
             var dateRange =DateRange.Create(start,end);
 
-            return new Period(dateRange,target);
+            var period = new Period(dateRange,target);
+            period.Events.Add(new PeriodCreatedEvent(period));
+
+            return period;
         }
 
         public void UpdateFrom(Period source)

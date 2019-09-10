@@ -59,5 +59,10 @@ namespace Ajf.NsPlanner.Domain.Entities
 
             Period = source.Period;
         }
+
+        public Assignment CreateAssignment()
+        {
+            return Assignment.Create(this);
+        }
     }
 }

@@ -40,11 +40,10 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
                 {
                     _repository.Add(eventRequest);
                     eventRequest.Events.Add(new EventRequestCreatedEvent(eventRequest));
-
-                    var assignment = Assignment.Create(eventRequest);
+                    
+                    var assignment = eventRequest.CreateAssignment();
                     _repository.Add(assignment);
-                    assignment.EventRequest = eventRequest;
-                    eventRequest.Events.Add(new AssignmentCreatedEvent(assignment));
+                    
                 }
                 else
                 {
@@ -66,8 +65,7 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
             if (period == null)
             {
                 period = Period.Create(eventRequest.DesiredWhen);
-                period.Events.Add(new PeriodCreatedEvent(period));
-
+                
                 _repository.Add(period);
                 periods.Add(period);
             }
