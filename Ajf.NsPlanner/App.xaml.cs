@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -76,6 +77,9 @@ namespace Ajf.NsPlanner.UI
             var statsSchoolWindow = ServiceProvider.GetRequiredService<StatsSchoolWindow>();
             statsSchoolWindow.DataContext = ServiceProvider.GetRequiredService<IStatsSchoolsViewModel>();
 
+            var editCounselorsWindow = ServiceProvider.GetRequiredService<EditCounselorsWindow>();
+            editCounselorsWindow.DataContext = ServiceProvider.GetRequiredService<IEditCounselorsViewModel>();
+
             mainWindow.ShowDialog();
 
             Current.Shutdown();
@@ -124,6 +128,7 @@ namespace Ajf.NsPlanner.UI
             services.AddTransient(typeof(StatsAcceptedRejectedWindow));
             services.AddTransient(typeof(StatsEmailAddressesWindow));
             services.AddTransient(typeof(StatsSchoolWindow));
+            services.AddTransient(typeof(EditCounselorsWindow));
         }
 
         private static void AddApplicationQueryHandlers(IServiceCollection services)
@@ -183,6 +188,7 @@ namespace Ajf.NsPlanner.UI
             services.AddSingleton<IStatsAcceptedRejectedViewModel, StatsAcceptedRejectedViewModel>();
             services.AddSingleton<IStatsEmailAddressesViewModel, StatsEmailAddressesViewModel>();
             services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
+            services.AddSingleton<IEditCounselorsViewModel, EditCounselorsViewModel>();
         }
 
         private static void AddDatabaseConnection(IServiceCollection services)

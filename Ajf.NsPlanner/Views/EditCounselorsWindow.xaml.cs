@@ -5,11 +5,11 @@ using Ajf.NsPlanner.UI.Services;
 namespace Ajf.NsPlanner.UI.Views
 {
     /// <summary>
-    ///     Interaction logic for EditDatesWindow.xaml
+    ///     Interaction logic for EditCounselorsWindow.xaml
     /// </summary>
-    public partial class EditDatesWindow
+    public partial class EditCounselorsWindow
     {
-        public EditDatesWindow()
+        public EditCounselorsWindow()
         {
             InitializeComponent();
         }

@@ -21,7 +21,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             IEditDatesViewModel editDatesViewModel,
             IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel,
             IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
-            ISetMarkerCommand setMarkerCommand)
+            ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel)
         {
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
@@ -30,6 +30,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             StatsEmailAddressesViewModel = statsEmailAddressesViewModel;
             StatsSchoolsViewModel = statsSchoolsViewModel;
             SetMarkerCommand = setMarkerCommand;
+            EditCounselorsViewModel = editCounselorsViewModel;
             PeriodSelectionViewModel = periodSelectionViewModel;
 
             PeriodSelectionViewModel.PropertyChanged += PeriodSelectionViewModel_PropertyChanged;
@@ -57,6 +58,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public IStatsEmailAddressesViewModel StatsEmailAddressesViewModel { get; }
         public IStatsSchoolsViewModel StatsSchoolsViewModel { get; }
         public ISetMarkerCommand SetMarkerCommand { get; }
+        public IEditCounselorsViewModel EditCounselorsViewModel { get; }
 
         public IEditDatesViewModel EditDatesViewModel { get; }
 

@@ -24,6 +24,7 @@
                 <MenuItem Header="Afslut" Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=MainWindow1}"/>
             </MenuItem>
             <MenuItem Header="Vis" >
+                <MenuItem Header="Vejledere" IsCheckable="True" IsChecked="{Binding EditCounselorsViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Datoer" IsCheckable="True" IsChecked="{Binding EditDatesViewModel.IsOpen}"></MenuItem>
                 <Separator />
                 <MenuItem Header="Tildelingsstatistik" IsCheckable="True" IsChecked="{Binding StatsAcceptedRejectedViewModel.IsOpen}"></MenuItem>
