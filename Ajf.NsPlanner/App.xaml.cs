@@ -140,6 +140,7 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
             services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
             services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
+            services.AddScoped<IQueryHandler<ListCounselorsQuery, Counselor[]>, ListCounselorsQueryHandler>(); 
         }
 
         private static void AddApplicationCommandHandlers(IServiceCollection services)

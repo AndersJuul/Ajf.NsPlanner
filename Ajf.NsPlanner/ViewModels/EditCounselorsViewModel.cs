@@ -1,4 +1,7 @@
-﻿using Ajf.NsPlanner.Application.Abstractions;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using Ajf.NsPlanner.Application.Abstractions;
+using Ajf.NsPlanner.Domain.Entities;
 using Ajf.NsPlanner.UI.Abstractions;
 using Ajf.NsPlanner.UI.Models;
 using Ajf.NsPlanner.UI.Services;
@@ -12,6 +15,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public EditCounselorsViewModel(IDispatcher dispatcher, IToggleAvailableDateCommand toggleAvailableDateCommand)
         {
+            CounselorList=new ObservableCollection<CounselorViewModel>();
             _dispatcher = dispatcher;
         }
 
@@ -37,5 +41,21 @@ namespace Ajf.NsPlanner.UI.ViewModels
         {
             WindowPositionManager.Set(name, positionEtc);
         }
+
+        public void SetCounselors(Counselor[] counselors)
+        {
+            CounselorList.Clear();
+            foreach (var counselor in counselors)
+            {
+                var periodViewModel = new CounselorViewModel(counselor);
+                CounselorList.Add(periodViewModel);
+            }
+
+            SelectedCounselor = CounselorList.FirstOrDefault();
+        }
+
+        public CounselorViewModel SelectedCounselor { get; set; }
+
+        public ObservableCollection<CounselorViewModel> CounselorList { get; set; }
     }
 }

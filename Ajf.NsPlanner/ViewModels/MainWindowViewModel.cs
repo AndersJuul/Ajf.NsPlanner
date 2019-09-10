@@ -38,6 +38,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
             var periods1 = dispatcher.Dispatch(new FindPeriodsQuery());
             PeriodSelectionViewModel.SetPeriods(periods1);
+
+            var counselors = dispatcher.Dispatch(new ListCounselorsQuery());
+            EditCounselorsViewModel.SetCounselors(counselors);
         }
 
         public string Title => "NS Planner -- " + (PeriodSelectionViewModel.SelectedPeriod == null
