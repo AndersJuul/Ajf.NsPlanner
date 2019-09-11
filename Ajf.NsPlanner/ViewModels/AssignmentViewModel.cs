@@ -1,6 +1,5 @@
 ﻿using System;
 using Ajf.NsPlanner.Domain.Entities;
-using Ajf.NsPlanner.UI.Abstractions;
 
 namespace Ajf.NsPlanner.UI.ViewModels
 {
@@ -36,12 +35,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
                 default: return "FEJL";
             }
-        }
-
-        public AssignmentViewModel Clone()
-        {
-            var assignment = _assignment.Clone();
-            return new AssignmentViewModel(assignment);
         }
 
         public void ModelUpdate(Assignment assignment)

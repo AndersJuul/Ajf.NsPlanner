@@ -49,6 +49,7 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
                 {
                     existing.UpdateFrom(eventRequest);
                     existing.Events.Add(new EventRequestUpdatedEvent(existing));
+                    
                     _repository.Update(existing);
                 }
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.Domain.SharedKernel;
 
@@ -8,12 +7,7 @@ namespace Ajf.NsPlanner.Domain.Entities
     public class Assignment : AggregateRoot
     {
         private Counselor _counselor;
-
-        //private Assignment(EventRequest eventRequest)
-        //{
-        //    EventRequest = eventRequest;
-        //    SpecificationStatus = Recalculate();
-        //}
+        private SpecificationStatus _specificationStatus;
 
         private Assignment()
         {
@@ -33,7 +27,18 @@ namespace Ajf.NsPlanner.Domain.Entities
         }
 
         public string Marker { get; set; }
-        public SpecificationStatus SpecificationStatus { get;protected set; }
+
+        public SpecificationStatus SpecificationStatus
+        {
+            get
+            {
+                if(_specificationStatus==SpecificationStatus.None)
+                    SpecificationStatus = Recalculate();
+
+                return _specificationStatus;
+            }
+            protected set => _specificationStatus = value;
+        }
 
         public Place Place { get; set; }
         public DateTime DateTimeOfStart { get; set; }
@@ -60,26 +65,17 @@ namespace Ajf.NsPlanner.Domain.Entities
             {
                 EventRequest = newEventRequest
             };
+            assignment.Recalculate();
             assignment.Events.Add(new AssignmentCreatedEvent(assignment));
 
             return assignment;
         }
 
-        public Assignment Clone()
-        {
-            throw new NotImplementedException();
-            //var assignment = new Assignment(EventRequest)
-            //{
-            //    Id = Id
-            //};
-            //return assignment;
-        }
-
         public void UpdateFrom(Assignment assignment)
         {
             Counselor = assignment.Counselor;
-            SpecificationStatus = assignment.SpecificationStatus;
             Marker = assignment.Marker;
+            Recalculate();
         }
     }
 }

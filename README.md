@@ -100,6 +100,16 @@ De personer, som feks via Google indtastningsformular har indsendt et ønsker om
 
 Et simpelt mærke som kan sættes på et ønske og derefter bruges til at filtere ønsker efter. Eksempelvis kan man markere alle julearrangementer med '0' og alle arrangementer som kræver sensommervejr med et '1' og derefter filtrere så kun '0' og '1' vises.
 
+### Specifikations-status (SpecificationStatus)
+
+Hver tildeling skal have en status for hvor langt man er i tildelingprocessen. Dette er kun relevant i det omfang at man deler Tildelingen op i flere trin. Idag specificerer man et ønske 'fuldt' (se nedenfor) før man går videre til næste ønske.
+
+Fuldt specificeret: Der er tildelt en dato, en vejleder og et arrangment.
+
+Ikke specificeret: Der er ikke tildelt nogen af ovenstående.
+
+Delvist specificeret: Resten (dvs for ønsket er der tildelt en eller flere af de ovenstående, men ikke alle)
+
 
 
 ## Ubiquitous Language (verbs, engelske gloser er benævnelsen i koden)
