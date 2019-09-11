@@ -12,9 +12,24 @@ namespace Ajf.NsPlanner.UI.ViewModels
             _counselor = counselor;
         }
 
-        public string Name => _counselor.Name;
-        public string Email => _counselor.Email;
-        public string Phone => _counselor.Phone;
+        public string Name
+        {
+            get => _counselor.Name;
+            set => _counselor.Name = value;
+        }
+
+        public string Email
+        {
+            get => _counselor.Email;
+            set => _counselor.Email = value;
+        }
+
+        public string Phone
+        {
+            get => _counselor.Phone;
+            set => _counselor.Phone = value;
+        }
+
         public Guid Id => _counselor.Id;
         public Counselor Model => _counselor;
     }

@@ -12,6 +12,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
     {
         private readonly IDispatcher _dispatcher;
         private bool _isOpen;
+        private CounselorViewModel _selectedCounselor;
 
         public EditCounselorsViewModel(IDispatcher dispatcher, IToggleAvailableDateCommand toggleAvailableDateCommand)
         {
@@ -54,7 +55,15 @@ namespace Ajf.NsPlanner.UI.ViewModels
             SelectedCounselor = CounselorList.FirstOrDefault();
         }
 
-        public CounselorViewModel SelectedCounselor { get; set; }
+        public CounselorViewModel SelectedCounselor
+        {
+            get => _selectedCounselor;
+            set
+            {
+                _selectedCounselor = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<CounselorViewModel> CounselorList { get; set; }
     }
