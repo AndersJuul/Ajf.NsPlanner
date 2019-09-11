@@ -155,11 +155,15 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<ICommandHandler<ToggleAvailableDateXCommand>, ToggleAvailableDateXCommandHandler>();
             services.AddScoped<ICommandHandler<AddAvailableDatesCommand>, AddAvailableDatesCommandHandler>();
             services.AddScoped<ICommandHandler<SetMarkerOnAssignmentCommand>, SetMarkerOnAssignmentCommandHandler>();
+            services.AddScoped<ICommandHandler<AddCounselorCommand>, AddCounselorCommandHandler>();
+            services.AddScoped<ICommandHandler<UpdateCounselorCommand>, UpdateCounselorCommandHandler>();
+            
         }
 
         private static void AddUiCommands(IServiceCollection services)
         {
             services.AddScoped<INewPeriodCommand, NewPeriodCommand>();
+            services.AddScoped<INewCounselorCommand, NewCounselorCommand>();
             services.AddScoped<IDeletePeriodCommand, DeletePeriodCommand>();
             services.AddScoped<IImportLatestRawCommand, ImportLatestRawCommand>();
             services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
@@ -204,4 +208,5 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IRepository, EfRepository>();
         }
     }
+
 }

@@ -6,11 +6,11 @@ using Ajf.NsPlanner.UI.Commands.Base;
 
 namespace Ajf.NsPlanner.UI.Commands
 {
-    public class NewPeriodCommand : BaseCommand, INewPeriodCommand
+    public class NewCounselorCommand : BaseCommand, INewCounselorCommand
     {
         private readonly IDispatcher _dispatcher;
 
-        public NewPeriodCommand(IDispatcher dispatcher)
+        public NewCounselorCommand(IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
@@ -22,11 +22,7 @@ namespace Ajf.NsPlanner.UI.Commands
 
         public override void Execute(object parameter)
         {
-            var vm = parameter as IMainWindowViewModel;
-            if (vm == null)
-                throw new ArgumentNullException(nameof(parameter));
-
-            _dispatcher.Dispatch(new AddPeriodCommand());
+            _dispatcher.Dispatch(new AddCounselorCommand());
         }
     }
 }

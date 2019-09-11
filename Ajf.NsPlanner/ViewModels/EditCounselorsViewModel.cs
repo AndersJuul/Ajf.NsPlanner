@@ -10,12 +10,14 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class EditCounselorsViewModel : ViewModel, IEditCounselorsViewModel
     {
+        public INewCounselorCommand NewCounselorCommand { get; }
         private readonly IDispatcher _dispatcher;
         private bool _isOpen;
         private CounselorViewModel _selectedCounselor;
 
-        public EditCounselorsViewModel(IDispatcher dispatcher, IToggleAvailableDateCommand toggleAvailableDateCommand)
+        public EditCounselorsViewModel(IDispatcher dispatcher, INewCounselorCommand newCounselorCommand)
         {
+            NewCounselorCommand = newCounselorCommand;
             CounselorList=new ObservableCollection<CounselorViewModel>();
             _dispatcher = dispatcher;
         }
@@ -48,7 +50,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             CounselorList.Clear();
             foreach (var counselor in counselors)
             {
-                var periodViewModel = new CounselorViewModel(counselor);
+                var periodViewModel = new CounselorViewModel(counselor,_dispatcher);
                 CounselorList.Add(periodViewModel);
             }
 

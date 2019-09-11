@@ -3,29 +3,28 @@ using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Domain.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
 using Ajf.NsPlanner.Domain.Events;
-using Ajf.NsPlanner.Domain.SharedKernel;
 using CSharpFunctionalExtensions;
 
 namespace Ajf.NsPlanner.Application.CommandHandlers
 {
-    public class UpdatePeriodCommandHandler : ICommandHandler<UpdatePeriodCommand>
+    public class UpdateCounselorCommandHandler : ICommandHandler<UpdateCounselorCommand>
     {
         private readonly IRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdatePeriodCommandHandler(IRepository repository, IUnitOfWork unitOfWork)
+        public UpdateCounselorCommandHandler(IRepository repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
 
-        public Result Handle(UpdatePeriodCommand command)
+        public Result Handle(UpdateCounselorCommand command)
         {
-            var period = _repository.GetById<Period>(command.Period.Id);
-            period.UpdateFrom(command.Period);
-            _repository.Update(period);
+            var counselor = _repository.GetById<Counselor>(command.Counselor.Id);
+            counselor.UpdateFrom(command.Counselor);
+            _repository.Update(counselor);
 
-            period.Events.Add(new PeriodUpdatedEvent(period));
+            counselor.Events.Add(new CounselorUpdatedEvent(counselor));
 
             _unitOfWork.SaveChanges();
 

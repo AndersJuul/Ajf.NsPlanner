@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.Domain.SharedKernel;
@@ -9,8 +7,6 @@ namespace Ajf.NsPlanner.Domain.Entities
 {
     public class Period : BaseEntity
     {
-        public DateRange DateRange { get; set; }
-        public string Target { get; set; }
         private Period(DateRange dateRange, string target)
         {
             DateRange = dateRange;
@@ -21,6 +17,9 @@ namespace Ajf.NsPlanner.Domain.Entities
         {
         }
 
+        public DateRange DateRange { get; set; }
+        public string Target { get; set; }
+
         public static Period Create(string target)
         {
             var yearAsString = target.Split(" ").Last();
@@ -28,11 +27,11 @@ namespace Ajf.NsPlanner.Domain.Entities
             var isSpring = target.ToLower().Contains("forår");
             var startMonth = isSpring ? 1 : 7;
             var endMonth = isSpring ? 6 : 12;
-            var start = new DateTime(year,startMonth,1);
-            var end = new DateTime(year,endMonth,isSpring?30:31);
-            var dateRange =DateRange.Create(start,end);
+            var start = new DateTime(year, startMonth, 1);
+            var end = new DateTime(year, endMonth, isSpring ? 30 : 31);
+            var dateRange = DateRange.Create(start, end);
 
-            var period = new Period(dateRange,target);
+            var period = new Period(dateRange, target);
             period.Events.Add(new PeriodCreatedEvent(period));
 
             return period;
@@ -55,7 +54,7 @@ namespace Ajf.NsPlanner.Domain.Entities
 
         public AvailableDate CreateAvailableDate(in DateTime date)
         {
-            return  AvailableDate.Create(date, this);
+            return AvailableDate.Create(date, this);
         }
     }
 }

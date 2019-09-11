@@ -6,6 +6,8 @@ Programmet vedligeholder en database indeholdende personhenførbare oplysninger 
 
 Programmet er inspireret af konstruktioner fra Steve Smith (https://ardalis.com), Vladimir Khorikov (https://enterprisecraftsmanship.com/) og Eric Evans (http://domainlanguage.com/)
 
+
+
 ## Actors
 
 ### Tildeler
@@ -19,6 +21,8 @@ Den person som sikrer at GDPR overholdes gennem sletning af personhenførbare op
 ### Backup-ansvarlig
 
 Den person som sikrer at der tages backup af programmets data, primært filerne indeholdende databasen i Microsoft SQL Server-format.
+
+
 
 ## Use Cases
 
@@ -48,6 +52,10 @@ Som tildeler ønsker jeg at kunne filtrere ønsker således at kun et sub-set af
 
 Som GDPR-ansvarlig ønsker jeg at kunne slette en periode, således at alle registrerede ønsker og arrangementer slettes fra databasen for den pågældende periode. Bemærk, at man ved indlæsning af ønsker vil oprette perioden igen hvis den ligger i fremtiden, men ikke hvis den ligger i fortiden (som det ofte vil være tilfældet).
 
+### Redigering af Vejledere
+
+Som tildeler ønsker jeg at kunne tilføje nye vejledere, redigere vejlederes oplysninger og slette vejledere.
+
 ### Backup og sletning af programoplysninger
 
 Som Backup-ansvarlig og som GDPR-ansvarlig ønsker jeg alle programmets data opbevaret i en separat folder, der kan laves backup af eller slettes.
@@ -56,7 +64,10 @@ Som Backup-ansvarlig og som GDPR-ansvarlig ønsker jeg alle programmets data opb
 
 Csv-filer med følsomme data kan med fordel lægges samme sted, men det er udenfor programmets indflydelse hvortil de downloades og indlæses fra.
 
+
+
 ## Ubiquitous Language (nouns, engelske gloser er benævnelsen i koden)
+
 ### Ønske (EventRequest)
 
 Ønsket er som indtastet af indsendere af ønsket: Hvem man er, hvad man ønsker og hvornår.
@@ -89,7 +100,10 @@ De personer, som feks via Google indtastningsformular har indsendt et ønsker om
 
 Et simpelt mærke som kan sættes på et ønske og derefter bruges til at filtere ønsker efter. Eksempelvis kan man markere alle julearrangementer med '0' og alle arrangementer som kræver sensommervejr med et '1' og derefter filtrere så kun '0' og '1' vises.
 
+
+
 ## Ubiquitous Language (verbs, engelske gloser er benævnelsen i koden)
+
 ### Tildele arrangement
 At knytte en Naturvejleder, et Sted og et Arrangement og et Afholdelsestidspunkt til et Ønske.
 
@@ -102,3 +116,7 @@ Handlingen, når man ønsker at fjerne alle registreringer for en periode. Alle 
 Ønsker og tildelinger gemmes i databasen og opbevares indtil de aktivt slettes ved lukning af en periode. En periode vil normalt holdes åben indtil ønsker er behandlet for den efterfølgende periode.
 
 Eksempelvis vil en tildeler i sommeren 2019 behandle ønsker for efteråret 2019. Tildeleren vil i vinteren 2019/2020 tildele behandle ønsker for foråret 2020. Når der er udsendt mails om tildelte arrangementer for foråret 2020 vil tildeleren slette perioden 'efterår 2019' hvorved alle registreringer i databasen slettes for denne periode.
+
+Tilsvarende opbevares oplysninger for Naturvejledere. Disse oplysninger skal tilsvarende være arbejds-email og arbejdstelefonnummer. Hvis en Naturvejleder stopper i kontekst af planlægningprogrammet kan de slettes når de ikke længere er kædet til opbevarede (tildelte) ønsker.
+
+Endelig har man jfr GDPR retten til at få udtrukket de oplysninger, der er registreret om een. Dette er ikke understøttet af programmet, da det formodes at ske meget sjældent, om nogensinde. Hvis det sker, kan en tekniker på en halv time lave et udtræk af databasen baseret på brugerens email.
