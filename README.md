@@ -8,7 +8,7 @@ Programmet er inspireret af konstruktioner fra Steve Smith (https://ardalis.com)
 
 
 
-## Actors
+## <u>Actors</u>
 
 ### Tildeler
 
@@ -24,7 +24,7 @@ Den person som sikrer at der tages backup af programmets data, primært filerne 
 
 
 
-## Use Cases
+## <u>Use Cases</u>
 
 ### Indlæsning af ønsker
 
@@ -54,7 +54,11 @@ Som GDPR-ansvarlig ønsker jeg at kunne slette en periode, således at alle regi
 
 ### Redigering af Vejledere
 
-Som tildeler ønsker jeg at kunne tilføje nye vejledere, redigere vejlederes oplysninger og slette vejledere.
+Som tildeler ønsker jeg at kunne tilføje nye vejledere, redigere vejlederes oplysninger og slette vejledere. Sletning kan dog ikke ske, hvis Vejlederen er tilknyttet et arrangement.
+
+### Redigering af steder
+
+Som tildeler ønsker jeg at kunne tilføje nye steder, redigere steders oplysninger og slette steder. Sletning kan dog ikke ske, hvis Stedet er tilknyttet et arrangement.
 
 ### Backup og sletning af programoplysninger
 
@@ -66,7 +70,7 @@ Csv-filer med følsomme data kan med fordel lægges samme sted, men det er udenf
 
 
 
-## Ubiquitous Language (nouns, engelske gloser er benævnelsen i koden)
+## <u>Ubiquitous Language (nouns, engelske gloser er benævnelsen i koden)</u>
 
 ### Ønske (EventRequest)
 
@@ -112,7 +116,7 @@ Delvist specificeret: Resten (dvs for ønsket er der tildelt en eller flere af d
 
 
 
-## Ubiquitous Language (verbs, engelske gloser er benævnelsen i koden)
+## <u>Ubiquitous Language (verbs, engelske gloser er benævnelsen i koden)</u>
 
 ### Tildele arrangement
 At knytte en Naturvejleder, et Sted og et Arrangement og et Afholdelsestidspunkt til et Ønske.
@@ -121,7 +125,7 @@ At knytte en Naturvejleder, et Sted og et Arrangement og et Afholdelsestidspunkt
 
 Handlingen, når man ønsker at fjerne alle registreringer for en periode. Alle ønsker og tildelinger fjernes når en periode slettes.
 
-## GDPR
+## <u>GDPR</u>
 
 Ønsker og tildelinger gemmes i databasen og opbevares indtil de aktivt slettes ved lukning af en periode. En periode vil normalt holdes åben indtil ønsker er behandlet for den efterfølgende periode.
 

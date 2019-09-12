@@ -5,7 +5,7 @@ using Ajf.NsPlanner.Domain.Entities;
 
 namespace Ajf.NsPlanner.UI.ViewModels
 {
-    public class CounselorViewModel
+    public class CounselorViewModel:ViewModel
     {
         private readonly Counselor _counselor;
         private readonly IDispatcher _dispatcher;
@@ -23,6 +23,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             {
                 _counselor.Name = value;
                 CommitChanges();
+                OnPropertyChanged();
             }
         }
         public void CommitChanges()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Ajf.NsPlanner.Domain.Abstractions;
@@ -33,6 +34,7 @@ namespace Ajf.NsPlanner.Infrastructure.Data.Data
         public DbSet<Period> Periods { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<AvailableDate> AvailableDates { get; set; }
+        public DbSet<Place> Places { get; set; }
 
         public override int SaveChanges()
         {

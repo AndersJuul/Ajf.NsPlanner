@@ -21,7 +21,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             IEditDatesViewModel editDatesViewModel,
             IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel,
             IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
-            ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel)
+            ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel, IEditPlacesViewModel editPlacesViewModel)
         {
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
@@ -31,6 +31,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             StatsSchoolsViewModel = statsSchoolsViewModel;
             SetMarkerCommand = setMarkerCommand;
             EditCounselorsViewModel = editCounselorsViewModel;
+            EditPlacesViewModel = editPlacesViewModel;
             PeriodSelectionViewModel = periodSelectionViewModel;
 
             PeriodSelectionViewModel.PropertyChanged += PeriodSelectionViewModel_PropertyChanged;
@@ -41,6 +42,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
             var counselors = dispatcher.Dispatch(new ListCounselorsQuery());
             EditCounselorsViewModel.SetCounselors(counselors);
+
+            var places = dispatcher.Dispatch(new ListPlacesQuery());
+            EditPlacesViewModel.SetPlaces(places);
         }
 
         public string Title => "NS Planner -- " + (PeriodSelectionViewModel.SelectedPeriod == null
@@ -62,6 +66,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public IStatsSchoolsViewModel StatsSchoolsViewModel { get; }
         public ISetMarkerCommand SetMarkerCommand { get; }
         public IEditCounselorsViewModel EditCounselorsViewModel { get; }
+        public IEditPlacesViewModel EditPlacesViewModel { get; }
 
         public IEditDatesViewModel EditDatesViewModel { get; }
 

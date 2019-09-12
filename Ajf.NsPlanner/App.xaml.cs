@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -80,6 +79,9 @@ namespace Ajf.NsPlanner.UI
             var editCounselorsWindow = ServiceProvider.GetRequiredService<EditCounselorsWindow>();
             editCounselorsWindow.DataContext = ServiceProvider.GetRequiredService<IEditCounselorsViewModel>();
 
+            var editPlacesWindow = ServiceProvider.GetRequiredService<EditPlacesWindow>();
+            editPlacesWindow.DataContext = ServiceProvider.GetRequiredService<IEditPlacesViewModel>();
+
             mainWindow.ShowDialog();
 
             Current.Shutdown();
@@ -129,6 +131,7 @@ namespace Ajf.NsPlanner.UI
             services.AddTransient(typeof(StatsEmailAddressesWindow));
             services.AddTransient(typeof(StatsSchoolWindow));
             services.AddTransient(typeof(EditCounselorsWindow));
+            services.AddTransient(typeof(EditPlacesWindow));
         }
 
         private static void AddApplicationQueryHandlers(IServiceCollection services)
@@ -140,15 +143,15 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
             services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
             services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
-            services.AddScoped<IQueryHandler<ListCounselorsQuery, Counselor[]>, ListCounselorsQueryHandler>(); 
+            services.AddScoped<IQueryHandler<ListCounselorsQuery, Counselor[]>, ListCounselorsQueryHandler>();
+            services.AddScoped<IQueryHandler<ListPlacesQuery, Place[]>, ListPlacesQueryHandler>();
         }
 
         private static void AddApplicationCommandHandlers(IServiceCollection services)
         {
             services.AddScoped<ICommandHandler<AddPeriodCommand>, AddPeriodCommandHandler>();
             services
-                .AddScoped<ICommandHandler<Ajf.NsPlanner.Application.Commands.DeletePeriodCommand>,
-                    DeletePeriodCommandHandler>();
+                .AddScoped<ICommandHandler<Application.Commands.DeletePeriodCommand>,DeletePeriodCommandHandler>();
             services.AddScoped<ICommandHandler<UpdatePeriodCommand>, UpdatePeriodCommandHandler>();
             services.AddScoped<ICommandHandler<ImportRequestsCommand>, ImportRequestsCommandHandler>();
             services.AddScoped<ICommandHandler<UpdateAssignmentCommand>, UpdateAssignmentCommandHandler>();
@@ -156,8 +159,9 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<ICommandHandler<AddAvailableDatesCommand>, AddAvailableDatesCommandHandler>();
             services.AddScoped<ICommandHandler<SetMarkerOnAssignmentCommand>, SetMarkerOnAssignmentCommandHandler>();
             services.AddScoped<ICommandHandler<AddCounselorCommand>, AddCounselorCommandHandler>();
+            services.AddScoped<ICommandHandler<AddPlaceCommand>, AddPlaceCommandHandler>();
             services.AddScoped<ICommandHandler<UpdateCounselorCommand>, UpdateCounselorCommandHandler>();
-            
+            services.AddScoped<ICommandHandler<UpdatePlaceCommand>, UpdatePlaceCommandHandler>();
         }
 
         private static void AddUiCommands(IServiceCollection services)
@@ -169,6 +173,7 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
             services.AddScoped<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
             services.AddScoped<ISetMarkerCommand, SetMarkerCommand>();
+            services.AddScoped<INewPlaceCommand, NewPlaceCommand>();
         }
 
         private static void AddDomainEventHandlers(IServiceCollection services)
@@ -194,6 +199,7 @@ namespace Ajf.NsPlanner.UI
             services.AddSingleton<IStatsEmailAddressesViewModel, StatsEmailAddressesViewModel>();
             services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
             services.AddSingleton<IEditCounselorsViewModel, EditCounselorsViewModel>();
+            services.AddSingleton<IEditPlacesViewModel, EditPlacesViewModel>();
         }
 
         private static void AddDatabaseConnection(IServiceCollection services)
@@ -208,5 +214,4 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IRepository, EfRepository>();
         }
     }
-
 }
