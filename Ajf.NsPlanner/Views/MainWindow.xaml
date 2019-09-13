@@ -70,24 +70,7 @@
                     <Label Content="Ønsket arrangement" />
                     <TextBox Text="{Binding AssignmentsViewModel.FilterDesire}"></TextBox>
                 </StackPanel>
-                <Grid HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Detaljer"></Label>
-
-                    <Label Grid.Row="1" Grid.Column="0" Content="Time Stamp"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding AssignmentsViewModel.SelectedAssignment.TimeStamp,Mode=OneWay}" IsReadOnly="True"></TextBox>
-
-                    <Label Grid.Row="2" Grid.Column="0" Content="Desire"></Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AssignmentsViewModel.SelectedAssignment.Desire,Mode=OneWay}" IsReadOnly="True"></TextBox>
-                </Grid>
+               
 
             </StackPanel>
             <!--Center by omitting dock spec-->

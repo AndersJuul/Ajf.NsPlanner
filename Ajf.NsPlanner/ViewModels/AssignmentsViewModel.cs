@@ -12,7 +12,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class AssignmentsViewModel: ViewModel, IAssignmentsViewModel
     {
-        private AssignmentViewModel _selectedAssignment;
+        private IAssignmentViewModel _selectedAssignment;
         private readonly IDispatcher _dispatcher;
         private bool _filterHideUnspecified;
         private bool _filterHideFullySpecified;
@@ -33,11 +33,11 @@ namespace Ajf.NsPlanner.UI.ViewModels
             }
         }
 
-        public ObservableCollection<AssignmentViewModel> Items { get; }
+        public ObservableCollection<IAssignmentViewModel> Items { get; }
 
         public bool ShowIdColumn { get; set; } = false;
 
-        public AssignmentViewModel SelectedAssignment
+        public IAssignmentViewModel SelectedAssignment
         {
             get => _selectedAssignment;
             set
@@ -105,7 +105,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public AssignmentsViewModel(IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
-            Items = new ObservableCollection<AssignmentViewModel>();
+            Items = new ObservableCollection<IAssignmentViewModel>();
 
             ReloadAssignmentsFromDb();
         }

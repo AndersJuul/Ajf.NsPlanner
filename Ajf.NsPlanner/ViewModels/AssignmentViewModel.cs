@@ -1,9 +1,10 @@
 ﻿using System;
 using Ajf.NsPlanner.Domain.Entities;
+using Ajf.NsPlanner.UI.Abstractions;
 
 namespace Ajf.NsPlanner.UI.ViewModels
 {
-    public class AssignmentViewModel: ViewModel
+    public class AssignmentViewModel: ViewModel, IAssignmentViewModel
     {
         public Assignment Assignment { get; }
 
