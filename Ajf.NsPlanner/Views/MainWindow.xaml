@@ -27,7 +27,9 @@
                 <MenuItem Header="Vejledere" IsCheckable="True" IsChecked="{Binding EditCounselorsViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Datoer" IsCheckable="True" IsChecked="{Binding EditDatesViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Steder" IsCheckable="True" IsChecked="{Binding EditPlacesViewModel.IsOpen}"></MenuItem>
-<Separator />
+                <Separator />
+                <MenuItem Header="Tildelingsdetaljer" IsCheckable="True" IsChecked="{Binding EditAssignmentViewModel.IsOpen}"></MenuItem>
+                <Separator />
                 <MenuItem Header="Tildelingsstatistik" IsCheckable="True" IsChecked="{Binding StatsAcceptedRejectedViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Emailstatistik" IsCheckable="True" IsChecked="{Binding StatsEmailAddressesViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Skolestatistik" IsCheckable="True" IsChecked="{Binding StatsSchoolsViewModel.IsOpen}"></MenuItem>

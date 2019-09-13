@@ -82,6 +82,9 @@ namespace Ajf.NsPlanner.UI
             var editPlacesWindow = ServiceProvider.GetRequiredService<EditPlacesWindow>();
             editPlacesWindow.DataContext = ServiceProvider.GetRequiredService<IEditPlacesViewModel>();
 
+            var editAssignmentWindow = ServiceProvider.GetRequiredService<EditAssignmentWindow>();
+            editAssignmentWindow.DataContext = ServiceProvider.GetRequiredService<IEditAssignmentViewModel>();
+
             mainWindow.ShowDialog();
 
             Current.Shutdown();
@@ -132,6 +135,7 @@ namespace Ajf.NsPlanner.UI
             services.AddTransient(typeof(StatsSchoolWindow));
             services.AddTransient(typeof(EditCounselorsWindow));
             services.AddTransient(typeof(EditPlacesWindow));
+            services.AddTransient(typeof(EditAssignmentWindow));
         }
 
         private static void AddApplicationQueryHandlers(IServiceCollection services)
@@ -200,6 +204,7 @@ namespace Ajf.NsPlanner.UI
             services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
             services.AddSingleton<IEditCounselorsViewModel, EditCounselorsViewModel>();
             services.AddSingleton<IEditPlacesViewModel, EditPlacesViewModel>();
+            services.AddScoped<IEditAssignmentViewModel, EditAssignmentViewModel>();
         }
 
         private static void AddDatabaseConnection(IServiceCollection services)

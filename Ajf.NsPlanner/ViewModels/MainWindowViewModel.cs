@@ -11,9 +11,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModel, IMainWindowViewModel
     {
+        private string _close;
         private ICommand _exitCommand;
         private RequestedDialog _requestedDialog;
-        private string _close;
 
         public MainWindowViewModel(IPeriodSelectionViewModel periodSelectionViewModel,
             IAssignmentsViewModel assignmentsViewModel, IImportLatestRawCommand importLatestRawCommand,
@@ -21,7 +21,8 @@ namespace Ajf.NsPlanner.UI.ViewModels
             IEditDatesViewModel editDatesViewModel,
             IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel,
             IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
-            ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel, IEditPlacesViewModel editPlacesViewModel)
+            ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel,
+            IEditPlacesViewModel editPlacesViewModel, IEditAssignmentViewModel editAssignmentViewModel)
         {
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
@@ -32,6 +33,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             SetMarkerCommand = setMarkerCommand;
             EditCounselorsViewModel = editCounselorsViewModel;
             EditPlacesViewModel = editPlacesViewModel;
+            EditAssignmentViewModel = editAssignmentViewModel;
             PeriodSelectionViewModel = periodSelectionViewModel;
 
             PeriodSelectionViewModel.PropertyChanged += PeriodSelectionViewModel_PropertyChanged;
@@ -56,11 +58,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public IStartAssignmentCounselorCommand StartAssignmentCounselorCommand { get; }
         public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
 
-        private void Exit(object obj)
-        {
-            Close = "Close window";
-        }
-
         public IStatsAcceptedRejectedViewModel StatsAcceptedRejectedViewModel { get; }
         public IStatsEmailAddressesViewModel StatsEmailAddressesViewModel { get; }
         public IStatsSchoolsViewModel StatsSchoolsViewModel { get; }
@@ -80,6 +77,8 @@ namespace Ajf.NsPlanner.UI.ViewModels
             }
         }
 
+        public IEditAssignmentViewModel EditAssignmentViewModel { get; }
+
         public void OnLoaded()
         {
             WindowManager.OpenWindowsLastOpened();
@@ -87,7 +86,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public IAssignmentsViewModel AssignmentsViewModel { get; }
 
-        public IPeriodSelectionViewModel PeriodSelectionViewModel { get; set; }
+        public IPeriodSelectionViewModel PeriodSelectionViewModel { get; }
 
         public void Handle(AssignmentCreatedEvent domainEvent)
         {
@@ -98,6 +97,21 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public void Handle(EventRequestUpdatedEvent domainEvent)
         {
             //throw new NotImplementedException();
+        }
+
+        public string Close
+        {
+            get => _close;
+            set
+            {
+                _close = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void Exit(object obj)
+        {
+            Close = "Close window";
         }
 
         private void PeriodSelectionViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -111,16 +125,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
                 StatsAcceptedRejectedViewModel.SelectedPeriod = PeriodSelectionViewModel?.SelectedPeriod;
                 StatsEmailAddressesViewModel.SelectedPeriod = PeriodSelectionViewModel?.SelectedPeriod;
                 StatsSchoolsViewModel.SelectedPeriod = PeriodSelectionViewModel?.SelectedPeriod;
-            }
-        }
-
-        public string Close
-        {
-            get => _close;
-            set
-            {
-                _close = value; 
-                OnPropertyChanged();
             }
         }
     }

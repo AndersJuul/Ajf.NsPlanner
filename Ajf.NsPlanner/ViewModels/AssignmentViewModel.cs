@@ -5,22 +5,22 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class AssignmentViewModel: ViewModel
     {
-        private readonly Assignment _assignment;
+        public Assignment Assignment { get; }
 
         public AssignmentViewModel(Assignment assignment)
         {
-            _assignment = assignment;
+            Assignment = assignment;
         }
 
-        public Guid Id => _assignment.Id;
-        public string Comment => _assignment.Comment;
-        public string TimeStamp => _assignment.EventRequest.TimeStamp;
-        public string Person => _assignment.EventRequest.ContactSummary;
-        public string SchoolInstituteName => _assignment.EventRequest.SchoolInstituteName;
-        public string Desire => _assignment.EventRequest.DesireSummary;
-        public string EventComment => _assignment.EventRequest.Comments;
-        public string Marker => _assignment.Marker;
-        public string SpecificationStatus => Translate(_assignment.SpecificationStatus);
+        public Guid Id => Assignment.Id;
+        public string Comment => Assignment.Comment;
+        public string TimeStamp => Assignment.EventRequest.TimeStamp;
+        public string Person => Assignment.EventRequest.ContactSummary;
+        public string SchoolInstituteName => Assignment.EventRequest.SchoolInstituteName;
+        public string Desire => Assignment.EventRequest.DesireSummary;
+        public string EventComment => Assignment.EventRequest.Comments;
+        public string Marker => Assignment.Marker;
+        public string SpecificationStatus => Translate(Assignment.SpecificationStatus);
 
         private string Translate(SpecificationStatus specificationStatus)
         {
@@ -39,7 +39,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public void ModelUpdate(Assignment assignment)
         {
-            _assignment.UpdateFrom(assignment);
+            Assignment.UpdateFrom(assignment);
 
             OnPropertyChanged(nameof(SpecificationStatus));
             OnPropertyChanged(nameof(Marker));
@@ -47,7 +47,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public bool RefersEventRequest(EventRequest eventRequest)
         {
-            return _assignment.EventRequest.Id == eventRequest.Id;
+            return Assignment.EventRequest.Id == eventRequest.Id;
         }
 
         public void NotifyAll()

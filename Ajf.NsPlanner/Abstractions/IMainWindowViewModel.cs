@@ -8,9 +8,10 @@ namespace Ajf.NsPlanner.UI.Abstractions
 {
     public interface IMainWindowViewModel:IViewModel, IHandle<AssignmentCreatedEvent>, IHandle<EventRequestUpdatedEvent>, ICloseWindow
     {
-        IPeriodSelectionViewModel PeriodSelectionViewModel { get; set; }
+        IPeriodSelectionViewModel PeriodSelectionViewModel { get;  }
         IAssignmentsViewModel AssignmentsViewModel { get; }
         RequestedDialog RequestedDialog { get; set; }
+        IEditAssignmentViewModel EditAssignmentViewModel { get;  }
         void OnLoaded();
     }
 }

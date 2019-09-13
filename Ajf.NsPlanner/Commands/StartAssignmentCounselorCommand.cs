@@ -31,8 +31,8 @@ namespace Ajf.NsPlanner.UI.Commands
 
             var counselors = _repository.List<Counselor>();
 
-            var editAssignmentViewModel =
-                new EditAssignmentViewModel(assignment, counselors.Select(x => new CounselorViewModel(x,_dispatcher)), _dispatcher);
+            IEditAssignmentViewModel editAssignmentViewModel = mainWindowViewModel.EditAssignmentViewModel;
+                //new EditAssignmentViewModel(counselors.Select(x => new CounselorViewModel(x,_dispatcher)), _dispatcher, mainWindowViewModel.AssignmentsViewModel);
             editAssignmentViewModel.SelectedCounselor =
                 editAssignmentViewModel.Counselors.SingleOrDefault(x => x.Id == assignment?.Counselor?.Id);
             mainWindowViewModel.RequestedDialog = new RequestedDialog("C", editAssignmentViewModel, WindowState2.ShowDialog, true);
