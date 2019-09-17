@@ -9,7 +9,6 @@
     <Grid>
         <ListView Name="ListView" ItemsSource="{Binding StatTable.DataTable.DefaultView}" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  SelectedItem="{Binding SelectedItem}"
                   services:GridViewSort.AutoSort="True"
                   BorderBrush="Black">
             <ListView.View>

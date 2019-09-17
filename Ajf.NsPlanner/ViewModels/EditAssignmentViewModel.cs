@@ -25,6 +25,8 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
             _assignmentsViewModel.PropertyChanged += SelectedAssignment_PropertyChanged;
         }
+        public string Title => "Detaljer for ønske.";
+
 
         public IAssignmentViewModel SelectedAssignment => _assignmentsViewModel.SelectedAssignment;
 
