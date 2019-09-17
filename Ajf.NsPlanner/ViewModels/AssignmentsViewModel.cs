@@ -147,11 +147,11 @@ namespace Ajf.NsPlanner.UI.ViewModels
             Items.Clear();
             foreach (var assignment in assignments)
             {
-                Items.Add(new AssignmentViewModel(assignment));
+                Items.Add(new AssignmentViewModel(assignment,_dispatcher));
             }
 
             var newCopyOfOldSelectedItem = Items.SingleOrDefault(x => x.Id == oldSelectedAssignment?.Id);
-            SelectedAssignment = newCopyOfOldSelectedItem ?? Items.FirstOrDefault();
+            SelectedAssignment = newCopyOfOldSelectedItem ?? Items.OrderBy(x=>x.TimeStamp).FirstOrDefault();
         }
 
         public void Handle(AssignmentUpdatedEvent domainEvent)

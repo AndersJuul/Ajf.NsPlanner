@@ -22,7 +22,7 @@ namespace Ajf.NsPlanner.Domain.Entities
             set
             {
                 _counselor = value;
-                SpecificationStatus =Recalculate();
+                Recalculate();
             }
         }
 
@@ -33,7 +33,7 @@ namespace Ajf.NsPlanner.Domain.Entities
             get
             {
                 if(_specificationStatus==SpecificationStatus.None)
-                    SpecificationStatus = Recalculate();
+                    Recalculate();
 
                 return _specificationStatus;
             }
@@ -46,7 +46,12 @@ namespace Ajf.NsPlanner.Domain.Entities
         public bool IsAccepted => Counselor != null;
         public bool IsRejected=> Counselor == null;
 
-        private SpecificationStatus Recalculate()
+        private void Recalculate()
+        {
+            SpecificationStatus = GetSpecificationStatus();
+        }
+
+        private SpecificationStatus GetSpecificationStatus()
         {
             var validationStatus = SpecificationStatus.PartlySpecified;
 

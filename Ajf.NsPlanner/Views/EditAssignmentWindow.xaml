@@ -11,16 +11,33 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Detaljer"></Label>
+        <Label Grid.Row="0" Grid.Column="0" Content="Tidsstempel"></Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAssignment.TimeStamp,Mode=OneWay}" IsReadOnly="True"></TextBox>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Time Stamp"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAssignment.TimeStamp,Mode=OneWay}" IsReadOnly="True"></TextBox>
+        <Label Grid.Row="1" Grid.Column="0" Content="Ønske"></Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAssignment.Desire,Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Desire"></Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedAssignment.Desire,Mode=OneWay}" IsReadOnly="True"></TextBox>
+        <Label Grid.Row="2" Grid.Column="0" Content="Person"></Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedAssignment.Person,Mode=OneWay}" IsReadOnly="True"></TextBox>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Kommentar"></Label>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedAssignment.EventComment,Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+
+        <Label Grid.Row="4" Grid.Column="0" Content="Skole-/Institutionsnavn"></Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedAssignment.SchoolInstituteName,Mode=OneWay}" IsReadOnly="True"></TextBox>
+
+        <Label Grid.Row="5" Grid.Column="0" Content="Tildelingsstatus"></Label>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedAssignment.SpecificationStatus,Mode=OneWay}" IsReadOnly="True"></TextBox>
+
+        <Label Grid.Row="6" Grid.Column="0" Content="Tildelingskommentar"></Label>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedAssignment.Comment}" ></TextBox>
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
 ﻿using System;
+using Ajf.NsPlanner.Application.Abstractions;
+using Ajf.NsPlanner.Application.Commands;
 using Ajf.NsPlanner.Domain.Entities;
 using Ajf.NsPlanner.UI.Abstractions;
 
@@ -6,15 +8,27 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class AssignmentViewModel: ViewModel, IAssignmentViewModel
     {
+        private readonly IDispatcher _dispatcher;
         public Assignment Assignment { get; }
 
-        public AssignmentViewModel(Assignment assignment)
+        public AssignmentViewModel(Assignment assignment, IDispatcher dispatcher)
         {
+            _dispatcher = dispatcher;
             Assignment = assignment;
         }
 
         public Guid Id => Assignment.Id;
-        public string Comment => Assignment.Comment;
+        public string Comment
+        {
+            get => Assignment.Comment;
+            set
+            {
+                Assignment.Comment = value; 
+                CommitChanges();
+                OnPropertyChanged();
+            }
+        }
+
         public string TimeStamp => Assignment.EventRequest.TimeStamp;
         public string Person => Assignment.EventRequest.ContactSummary;
         public string SchoolInstituteName => Assignment.EventRequest.SchoolInstituteName;
@@ -22,6 +36,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public string EventComment => Assignment.EventRequest.Comments;
         public string Marker => Assignment.Marker;
         public string SpecificationStatus => Translate(Assignment.SpecificationStatus);
+
 
         private string Translate(SpecificationStatus specificationStatus)
         {
@@ -35,6 +50,18 @@ namespace Ajf.NsPlanner.UI.ViewModels
                     return "Uspec";
 
                 default: return "FEJL";
+            }
+        }
+        public void CommitChanges()
+        {
+            try
+            {
+                _dispatcher.Dispatch(new UpdateAssignmentCommand(Assignment));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 
