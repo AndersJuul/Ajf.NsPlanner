@@ -175,6 +175,7 @@ namespace Ajf.NsPlanner.UI
             services.AddScoped<IDeletePeriodCommand, DeletePeriodCommand>();
             services.AddScoped<IImportLatestRawCommand, ImportLatestRawCommand>();
             services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
+            services.AddScoped<IStartAssignmentPlaceCommand, StartAssignmentPlaceCommand>();
             services.AddScoped<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
             services.AddScoped<ISetMarkerCommand, SetMarkerCommand>();
             services.AddScoped<INewPlaceCommand, NewPlaceCommand>();
@@ -182,12 +183,16 @@ namespace Ajf.NsPlanner.UI
 
         private static void AddDomainEventHandlers(IServiceCollection services)
         {
+            services.AddSingleton<IHandle<CounselorCreatedEvent>>(c => c.GetService<IEditCounselorsViewModel>());
+
             services.AddSingleton<IHandle<PeriodCreatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
             services.AddSingleton<IHandle<PeriodDeletedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
             services.AddSingleton<IHandle<PeriodUpdatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
+
             services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IAssignmentsViewModel>());
             services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsAcceptedRejectedViewModel>());
             services.AddSingleton<IHandle<AssignmentUpdatedEvent>>(c => c.GetService<IStatsSchoolsViewModel>());
+
             services.AddSingleton<IHandle<AvailableDateUpdatedEvent>>(c => c.GetService<IEditDatesViewModel>());
 
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();

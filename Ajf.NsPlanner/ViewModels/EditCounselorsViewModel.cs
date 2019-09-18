@@ -2,6 +2,7 @@
 using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
+using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.UI.Abstractions;
 using Ajf.NsPlanner.UI.Models;
 using Ajf.NsPlanner.UI.Services;
@@ -10,7 +11,6 @@ namespace Ajf.NsPlanner.UI.ViewModels
 {
     public class EditCounselorsViewModel : ViewModel, IEditCounselorsViewModel
     {
-        public INewCounselorCommand NewCounselorCommand { get; }
         private readonly IDispatcher _dispatcher;
         private bool _isOpen;
         private CounselorViewModel _selectedCounselor;
@@ -18,11 +18,25 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public EditCounselorsViewModel(IDispatcher dispatcher, INewCounselorCommand newCounselorCommand)
         {
             NewCounselorCommand = newCounselorCommand;
-            CounselorList=new ObservableCollection<CounselorViewModel>();
+            CounselorList = new ObservableCollection<CounselorViewModel>();
             _dispatcher = dispatcher;
         }
 
+        public INewCounselorCommand NewCounselorCommand { get; }
+
         public string Title => "Vejledere";
+
+        public CounselorViewModel SelectedCounselor
+        {
+            get => _selectedCounselor;
+            set
+            {
+                _selectedCounselor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<CounselorViewModel> CounselorList { get; set; }
 
 
         public bool IsOpen
@@ -50,23 +64,16 @@ namespace Ajf.NsPlanner.UI.ViewModels
             CounselorList.Clear();
             foreach (var counselor in counselors)
             {
-                var periodViewModel = new CounselorViewModel(counselor,_dispatcher);
+                var periodViewModel = new CounselorViewModel(counselor, _dispatcher);
                 CounselorList.Add(periodViewModel);
             }
 
             SelectedCounselor = CounselorList.FirstOrDefault();
         }
 
-        public CounselorViewModel SelectedCounselor
+        public void Handle(CounselorCreatedEvent domainEvent)
         {
-            get => _selectedCounselor;
-            set
-            {
-                _selectedCounselor = value; 
-                OnPropertyChanged();
-            }
+            CounselorList.Add(new CounselorViewModel(domainEvent.Counselor, _dispatcher));
         }
-
-        public ObservableCollection<CounselorViewModel> CounselorList { get; set; }
     }
 }

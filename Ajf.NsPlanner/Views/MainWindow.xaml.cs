@@ -36,6 +36,9 @@ namespace Ajf.NsPlanner.UI.Views
                     if (model.RequestedDialog.Name == "C")
                         w = new EditAssignmentCounselorWindow();
 
+                    if (model.RequestedDialog.Name == "PL")
+                        w = new EditAssignmentPlaceWindow();
+
                     if (model.RequestedDialog.Name == "P")
                         w = new EditPeriodWindow();
 

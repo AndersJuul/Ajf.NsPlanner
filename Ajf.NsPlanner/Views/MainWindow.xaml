@@ -37,6 +37,7 @@
             </MenuItem>
             <MenuItem Header="Tildel">
                 <MenuItem Header="Vejleder" CommandParameter="{Binding}" Command="{Binding StartAssignmentCounselorCommand}" InputGestureText="F5"/>
+                <MenuItem Header="Sted" CommandParameter="{Binding}" Command="{Binding StartAssignmentPlaceCommand}" InputGestureText="F6"/>
             </MenuItem>
         </Menu>
 
@@ -100,6 +101,7 @@
     </Grid>
     <Window.InputBindings>
         <KeyBinding Key="F5" CommandParameter="{Binding}" Command="{Binding StartAssignmentCounselorCommand}"  />
+        <KeyBinding Key="F6" CommandParameter="{Binding}" Command="{Binding StartAssignmentPlaceCommand}"  />
         <KeyBinding Key="F12" CommandParameter="{Binding}" Command="{Binding ImportLatestRawCommand}" />
         <KeyBinding Key="NumPad0"  CommandParameter="0" Command="{Binding SetMarkerCommand}" />
         <KeyBinding Key="NumPad1"  CommandParameter="1" Command="{Binding SetMarkerCommand}" />

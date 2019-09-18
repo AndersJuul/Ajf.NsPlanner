@@ -22,7 +22,8 @@ namespace Ajf.NsPlanner.UI.ViewModels
             IStatsAcceptedRejectedViewModel statsAcceptedRejectedViewModel,
             IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
             ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel,
-            IEditPlacesViewModel editPlacesViewModel, IEditAssignmentViewModel editAssignmentViewModel)
+            IEditPlacesViewModel editPlacesViewModel, IEditAssignmentViewModel editAssignmentViewModel,
+            IStartAssignmentPlaceCommand startAssignmentPlaceCommand)
         {
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
@@ -34,6 +35,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             EditCounselorsViewModel = editCounselorsViewModel;
             EditPlacesViewModel = editPlacesViewModel;
             EditAssignmentViewModel = editAssignmentViewModel;
+            StartAssignmentPlaceCommand = startAssignmentPlaceCommand;
             PeriodSelectionViewModel = periodSelectionViewModel;
 
             PeriodSelectionViewModel.PropertyChanged += PeriodSelectionViewModel_PropertyChanged;
@@ -47,6 +49,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
             var places = dispatcher.Dispatch(new ListPlacesQuery());
             EditPlacesViewModel.SetPlaces(places);
+
+            EditAssignmentViewModel.SetCounselors(counselors);
+            EditAssignmentViewModel.SetPlaces(places);
         }
 
         public string Title => "NS Planner -- " + (PeriodSelectionViewModel.SelectedPeriod == null
@@ -66,6 +71,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
         public IEditPlacesViewModel EditPlacesViewModel { get; }
 
         public IEditDatesViewModel EditDatesViewModel { get; }
+        public IStartAssignmentPlaceCommand StartAssignmentPlaceCommand { get; }
 
         public RequestedDialog RequestedDialog
         {

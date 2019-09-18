@@ -9,12 +9,12 @@ using Ajf.NsPlanner.UI.Views;
 
 namespace Ajf.NsPlanner.UI.Commands
 {
-    public class StartAssignmentCounselorCommand : StartAssignmentBaseCommand, IStartAssignmentCounselorCommand
+    public class StartAssignmentPlaceCommand : StartAssignmentBaseCommand, IStartAssignmentPlaceCommand
     {
         private readonly IRepository _repository;
         private readonly IDispatcher _dispatcher;
 
-        public StartAssignmentCounselorCommand(IRepository repository, IDispatcher dispatcher)
+        public StartAssignmentPlaceCommand(IRepository repository, IDispatcher dispatcher)
         {
             _repository = repository;
             _dispatcher = dispatcher;
@@ -22,15 +22,16 @@ namespace Ajf.NsPlanner.UI.Commands
 
         public override void Execute(object parameter)
         {
-            if (!(parameter is IMainWindowViewModel mainWindowViewModel))
+            var mainWindowViewModel = parameter as IMainWindowViewModel;
+            if (mainWindowViewModel == null)
                 return;
 
             var selectedAssignmentId = mainWindowViewModel.AssignmentsViewModel.SelectedAssignment.Id;
             var assignment = _repository.GetById<Assignment>(selectedAssignmentId);
 
-            mainWindowViewModel.EditAssignmentViewModel.SelectedCounselor =
-                mainWindowViewModel.EditAssignmentViewModel.Counselors.SingleOrDefault(x => x.Id == assignment?.Counselor?.Id);
-            mainWindowViewModel.RequestedDialog = new RequestedDialog("C", mainWindowViewModel.EditAssignmentViewModel, WindowState2.ShowDialog, true);
+            mainWindowViewModel.EditAssignmentViewModel.SelectedPlace =
+                mainWindowViewModel.EditAssignmentViewModel.Places.SingleOrDefault(x => x.Id == assignment?.Place?.Id);
+            mainWindowViewModel.RequestedDialog = new RequestedDialog("PL", mainWindowViewModel.EditAssignmentViewModel, WindowState2.ShowDialog, true);
         }
     }
 }

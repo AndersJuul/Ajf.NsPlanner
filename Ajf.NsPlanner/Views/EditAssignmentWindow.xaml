@@ -17,6 +17,7 @@
             <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Tidsstempel"></Label>
@@ -37,7 +38,10 @@
         <Label Grid.Row="5" Grid.Column="0" Content="Tildelingsstatus"></Label>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedAssignment.SpecificationStatus,Mode=OneWay}" IsReadOnly="True"></TextBox>
 
-        <Label Grid.Row="6" Grid.Column="0" Content="Tildelingskommentar"></Label>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedAssignment.Comment}" ></TextBox>
+        <Label Grid.Row="6" Grid.Column="0" Content="Vejleder"></Label>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedCounselor.Name,Mode=OneWay}" IsReadOnly="True"></TextBox>
+        
+        <Label Grid.Row="7" Grid.Column="0" Content="Tildelingskommentar"></Label>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SelectedAssignment.Comment}" ></TextBox>
     </Grid>
 </Window>
