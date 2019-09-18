@@ -3,13 +3,13 @@ using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Events
 {
-    public class PlaceUpdatedEvent : BaseDomainEvent
+    public class PlaceCreatedEvent : BaseDomainEvent
     {
-        public PlaceUpdatedEvent(Place place)
+        public Place Place { get; }
+
+        public PlaceCreatedEvent(Place place)
         {
             Place = place;
         }
-
-        public Place Place { get; }
     }
 }

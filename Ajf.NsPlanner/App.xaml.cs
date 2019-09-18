@@ -185,6 +185,8 @@ namespace Ajf.NsPlanner.UI
         {
             services.AddSingleton<IHandle<CounselorCreatedEvent>>(c => c.GetService<IEditCounselorsViewModel>());
 
+            services.AddSingleton<IHandle<PlaceCreatedEvent>>(c => c.GetService<IEditPlacesViewModel>());
+
             services.AddSingleton<IHandle<PeriodCreatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
             services.AddSingleton<IHandle<PeriodDeletedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());
             services.AddSingleton<IHandle<PeriodUpdatedEvent>>(c => c.GetService<IPeriodSelectionViewModel>());

@@ -81,6 +81,7 @@ namespace Ajf.NsPlanner.Domain.Entities
             Counselor = assignment.Counselor;
             Marker = assignment.Marker;
             Recalculate();
+            Events.Add(new AssignmentUpdatedEvent(this));
         }
     }
 }

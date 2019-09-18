@@ -2,6 +2,7 @@
 using System.Linq;
 using Ajf.NsPlanner.Application.Abstractions;
 using Ajf.NsPlanner.Domain.Entities;
+using Ajf.NsPlanner.Domain.Events;
 using Ajf.NsPlanner.UI.Abstractions;
 using Ajf.NsPlanner.UI.Models;
 using Ajf.NsPlanner.UI.Services;
@@ -68,5 +69,9 @@ namespace Ajf.NsPlanner.UI.ViewModels
         }
 
         public ObservableCollection<PlaceViewModel> PlaceList { get; set; }
+        public void Handle(PlaceCreatedEvent domainEvent)
+        {
+            PlaceList.Add(new PlaceViewModel(domainEvent.Place,_dispatcher));
+        }
     }
 }

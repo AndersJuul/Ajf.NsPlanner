@@ -24,8 +24,6 @@ namespace Ajf.NsPlanner.Application.CommandHandlers
             assignment.UpdateFrom(command.Assignment);
             _repository.Update(assignment);
 
-            assignment.Events.Add(new AssignmentUpdatedEvent(assignment));
-
             _unitOfWork.SaveChanges();
 
             return Result.Ok();

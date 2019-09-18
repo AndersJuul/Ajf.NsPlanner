@@ -1,4 +1,5 @@
-﻿using Ajf.NsPlanner.Domain.SharedKernel;
+﻿using Ajf.NsPlanner.Domain.Events;
+using Ajf.NsPlanner.Domain.SharedKernel;
 
 namespace Ajf.NsPlanner.Domain.Entities
 {
@@ -14,9 +15,12 @@ namespace Ajf.NsPlanner.Domain.Entities
         private Place()
         { }
 
-        public static Place Create() 
+        public static Place Create()
         {
-            return new Place();
+            var place = new Place();
+            place.Events.Add(new PlaceCreatedEvent(place));
+
+            return place;
         }
     }
 }
