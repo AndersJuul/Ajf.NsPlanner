@@ -139,4 +139,4 @@ Endelig har man jfr GDPR retten til at få udtrukket de oplysninger, der er regi
 
 ## Tildelinger
 
-![1568904579099](C:\Projects\Ajf.NsPlanner\Docs\1568904579099.png)
+![1568904579099](Docs\1568904579099.png)
