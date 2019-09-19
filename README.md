@@ -12,7 +12,7 @@ Programmet er inspireret af konstruktioner fra Steve Smith (https://ardalis.com)
 
 ### Tildeler
 
-Den person som arbejder med at behandle ønsker og afgøre om de skal tildeles et arrangement eller have afslag.
+Den person, som arbejder med at behandle ønsker og afgøre om de skal tildeles et arrangement eller have afslag.
 
 ### GDPR-ansvarlig
 
@@ -108,7 +108,7 @@ Et simpelt mærke som kan sættes på et ønske og derefter bruges til at filter
 
 Hver tildeling skal have en status for hvor langt man er i tildelingprocessen. Dette er kun relevant i det omfang at man deler Tildelingen op i flere trin. Idag specificerer man et ønske 'fuldt' (se nedenfor) før man går videre til næste ønske.
 
-Fuldt specificeret: Der er tildelt en dato, en vejleder og et arrangment.
+Fuldt specificeret: Der er tildelt en dato, en vejleder, et sted og et arrangment.
 
 Ikke specificeret: Der er ikke tildelt nogen af ovenstående.
 
@@ -129,8 +129,14 @@ Handlingen, når man ønsker at fjerne alle registreringer for en periode. Alle 
 
 Ønsker og tildelinger gemmes i databasen og opbevares indtil de aktivt slettes ved lukning af en periode. En periode vil normalt holdes åben indtil ønsker er behandlet for den efterfølgende periode.
 
-Eksempelvis vil en tildeler i sommeren 2019 behandle ønsker for efteråret 2019. Tildeleren vil i vinteren 2019/2020 tildele behandle ønsker for foråret 2020. Når der er udsendt mails om tildelte arrangementer for foråret 2020 vil tildeleren slette perioden 'efterår 2019' hvorved alle registreringer i databasen slettes for denne periode.
+Eksempelvis vil en tildeler i sommeren 2019 behandle ønsker for efteråret 2019. Tildeleren vil i vinteren 2019/2020 behandle ønsker for foråret 2020. Når der er udsendt mails om tildelte arrangementer for foråret 2020 vil tildeleren slette perioden 'efterår 2019' hvorved alle registreringer i databasen slettes for denne periode.
 
 Tilsvarende opbevares oplysninger for Naturvejledere. Disse oplysninger skal tilsvarende være arbejds-email og arbejdstelefonnummer. Hvis en Naturvejleder stopper i kontekst af planlægningprogrammet kan de slettes når de ikke længere er kædet til opbevarede (tildelte) ønsker.
 
 Endelig har man jfr GDPR retten til at få udtrukket de oplysninger, der er registreret om een. Dette er ikke understøttet af programmet, da det formodes at ske meget sjældent, om nogensinde. Hvis det sker, kan en tekniker på en halv time lave et udtræk af databasen baseret på brugerens email.
+
+# Brugergrænseflade
+
+## Tildelinger
+
+![1568904579099](C:\Projects\Ajf.NsPlanner\Docs\1568904579099.png)
