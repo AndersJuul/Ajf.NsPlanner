@@ -140,3 +140,12 @@ Endelig har man jfr GDPR retten til at få udtrukket de oplysninger, der er regi
 ## Tildelinger
 
 ![1568904579099](1568904579099.png)
+
+## Vejledere
+
+![1568905356925](1568905356925.png)
+
+## Steder
+
+![1568905416823](1568905416823.png)
+
