@@ -1,5 +1,5 @@
 ﻿try{ 
-  .\Ajf.NsPlanner3.Setup.exe
+  .\Ajf.NsPlanner.Setup.exe
   if ($LASTEXITCODE -ne 0) { Exit 1 }
 
   #Get-ChildItem -Path "." -File -Recurse -exclude *.msi | Remove-Item
