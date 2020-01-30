@@ -128,6 +128,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsEnricher.cs" />
     <Compile Include="SettingsFromConfigFile.cs" />
+    <None Include="Deploy.ps1" />
     <None Include="wix\$(ProjectName).g.wxs" />
   </ItemGroup>
   <ItemGroup>
