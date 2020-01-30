@@ -2,6 +2,6 @@
 {
     public interface IMsiBuilder
     {
-        void BuildMsi();
+        void BuildMsi(IMsiBuilderSettings msiBuilderSettings);
     }
 }

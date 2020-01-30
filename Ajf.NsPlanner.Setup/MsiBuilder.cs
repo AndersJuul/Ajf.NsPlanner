@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Serilog;
 using WixSharp;
@@ -8,22 +9,25 @@ namespace ConsoleApp1
 {
     public class MsiBuilder : IMsiBuilder
     {
-        public void BuildMsi()
+        public void BuildMsi(IMsiBuilderSettings msiBuilderSettings)
         {
             try
             {
                 Log.Logger.Debug(@"Building MSI...");
-
-                IMsiBuilderSettings msiBuilderSettings = new MsiBuilderSettings();
-
+                
                 var pathChoices = msiBuilderSettings.PathChoices;
                 var uiExe = msiBuilderSettings.UiExe;
 
-                Log.Logger.Debug(@"Creating installer for: " + uiExe);
+                Log.Logger.Debug(@"Creating installer for: " + uiExe + " and runs in " + Environment.CurrentDirectory);
 
-                var path = pathChoices.FirstOrDefault(x => File.Exists(x + @"\" + uiExe));
+                var path = pathChoices.FirstOrDefault(x => File.Exists(Path.Combine( x ,uiExe)));
                 if (string.IsNullOrEmpty(path))
                 {
+                    foreach (var pathChoice in pathChoices)
+                    {
+                        var fullPath = Path.GetFullPath(pathChoice);
+                        Log.Logger.Debug("Looked in vain in " + fullPath);
+                    }
                     throw new ArgumentException("The uiExe was not found: "+uiExe);
                 }
 
@@ -40,9 +44,6 @@ namespace ConsoleApp1
                 var productWithEnv = msiBuilderSettings.ProductName + $"{envStringToShow}";
 
                 Log.Logger.Debug(@"Product with env is: " + productWithEnv);
-
-                var x64SqLite = new Feature("x64SqLite");
-                var x86SqLite = new Feature("x86SqLite");
 
                 //var exeFileShortcut1 = new ExeFileShortcut(productWithEnv,
                 //    $@"%ProgramFiles%\\{companyName}\\{productWithEnv}\\JCI.ITC.SABPrice.UI.exe",
@@ -72,8 +73,6 @@ namespace ConsoleApp1
                         new Files(path + @"\*.*",
                             f => !f.EndsWith(".pdb") && !f.EndsWith(".msi")
                         )
-                        //,new Files(x64SqLite, path + @"\x64\SQLite.Interop.dll")
-                        //,new Files(x86SqLite, path + @"\x86\SQLite.Interop.dll")
                     ),
                     menuDir
                 )
@@ -113,14 +112,13 @@ namespace ConsoleApp1
                 //project.ControlPanelInfo.SystemComponent = true, //if set will not be shown in Control Panel
 
 
-                project.BannerImage = "TopBanner.bmp";
-                project.BackgroundImage = "MainPage.bmp";
+                project.BannerImage = "Top.bmp";
+                project.BackgroundImage = "Main.bmp";
 
                 Log.Logger.Debug(@"BuildMSI ");
-                Compiler.BuildMsi(project);
+                var buildMsi = Compiler.BuildMsi(project);
 
-                Log.Logger.Debug(@"Succesfully created ");
-                Log.Logger.Debug(project.Name);
+                Log.Logger.Debug(@"Succesfully created :" + buildMsi + " for " + project.Name);
             }
             catch (Exception e)
             {

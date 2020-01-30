@@ -1,15 +1,17 @@
-﻿namespace ConsoleApp1
+﻿using System.Configuration;
+
+namespace ConsoleApp1
 {
     public class SettingsEnricher
     {
         public static string ValueByKeyString(string s)
         {
-            throw new System.NotImplementedException();
+            return ConfigurationManager.AppSettings[s];
         }
 
         public static string[] ValueByKeyStringArray(string s)
         {
-            throw new System.NotImplementedException();
+            return ConfigurationManager.AppSettings[s].Split('|');
         }
     }
 }

@@ -6,21 +6,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var settings = new SettingsFromConfigFile();
+            var msiBuilderSettings = new MsiBuilderSettings();
 
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Is(settings.LoggingLevel)
-                //.Enrich.WithMachineName()
-                .Enrich.WithProperty("ReleaseNumber", settings.ReleaseNumber)
-                .Enrich.WithProperty("Environment", settings.Environment)
-                .Enrich.WithProperty("SuiteName", settings.SuiteName)
-                .Enrich.WithProperty("ComponentName", settings.ComponentName)
+                .MinimumLevel.Is(msiBuilderSettings.LoggingLevel)
+                .Enrich.WithMachineName()
+                .Enrich.WithProperty("ReleaseNumber", msiBuilderSettings.ReleaseNumber)
+                .Enrich.WithProperty("Environment", msiBuilderSettings.Environment)
+                .Enrich.WithProperty("SuiteName", msiBuilderSettings.SuiteName)
+                .Enrich.WithProperty("ComponentName", msiBuilderSettings.ComponentName)
                 .Enrich.FromLogContext()
-                .WriteTo.RollingFile(settings.FileName)
-                .WriteTo.Elasticsearch(settings.ElasticsearchSinkOptions)
+                .WriteTo.RollingFile(msiBuilderSettings.FileName)
+                .WriteTo.Elasticsearch(msiBuilderSettings.ElasticsearchSinkOptions)
+                .WriteTo.Console()
                 .CreateLogger();
 
-            new MsiBuilder().BuildMsi();
+            new MsiBuilder().BuildMsi(msiBuilderSettings);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace ConsoleApp1
 {
-    public interface IMsiBuilderSettings:IIdentitySettings
+    public interface IMsiBuilderSettings:IIdentitySettings, ILoggingSettings
     {
         string UiExe { get; set; }
         string ProductName { get; set; }
@@ -9,7 +9,5 @@ namespace ConsoleApp1
         string GuidBasis { get; set; }
         string CompanyName { get; set; }
         string MsiPrefix { get; set; }
-        string ReleaseNumber { get; set; }
-        string Environment { get; set; }
     }
 }
