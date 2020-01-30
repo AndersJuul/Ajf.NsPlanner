@@ -59,7 +59,7 @@ namespace Ajf.TestDataGenerator
 
             using (var write = new StreamWriter(outputCsvFilePath))
             {
-                var conf = new Configuration(CultureInfo.CurrentCulture)
+                var conf = new CsvConfiguration(CultureInfo.CurrentCulture)
                     { HasHeaderRecord = true, BadDataFound = null, Delimiter = "," };
                 conf.RegisterClassMap<RequestDtoMap>();
 
@@ -82,7 +82,7 @@ namespace Ajf.TestDataGenerator
 
             using (var reader = new StreamReader(csvFilePath, Encoding.UTF8))
             {
-                var conf = new Configuration(CultureInfo.CurrentCulture)
+                var conf = new CsvConfiguration(CultureInfo.CurrentCulture)
                     { HasHeaderRecord = true, BadDataFound = null, Delimiter = "," };
                 conf.RegisterClassMap<FakeNameDtoMap>();
                 using (var helper = new CsvReader(reader, conf))
@@ -96,7 +96,7 @@ namespace Ajf.TestDataGenerator
         {
             using (var reader = new StreamReader(csvFilePath, Encoding.UTF8))
             {
-                var conf = new Configuration(CultureInfo.CurrentCulture)
+                var conf = new CsvConfiguration(CultureInfo.CurrentCulture)
                     { HasHeaderRecord = true, BadDataFound = null, Delimiter = ";" };
                 conf.RegisterClassMap<FakePartialRequestDtoMap>();
                 using (var helper = new CsvReader(reader, conf))

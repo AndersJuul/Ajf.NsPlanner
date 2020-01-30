@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,7 +18,7 @@ namespace Ajf.NsPlanner.UI.Services
 
             using (var reader = new StreamReader(csvFilePath, Encoding.UTF8))
             {
-                var conf = new Configuration(CultureInfo.CurrentCulture)
+                var conf = new CsvConfiguration(CultureInfo.CurrentCulture)
                     {HasHeaderRecord = true, BadDataFound = null, Delimiter = ","};
                 conf.RegisterClassMap<RequestDtoMap>();
                 using (var helper = new CsvReader(reader, conf))
