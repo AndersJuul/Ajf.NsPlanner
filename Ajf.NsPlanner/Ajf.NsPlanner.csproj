@@ -31,12 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ajf.NsPlanner.Application\Ajf.NsPlanner.Application.csproj" />
-    <ProjectReference Include="..\Ajf.NsPlanner.Domain\Ajf.NsPlanner.Domain.csproj" />
-    <ProjectReference Include="..\Ajf.NsPlanner.Infrastructure.Data\Ajf.NsPlanner.Infrastructure.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
