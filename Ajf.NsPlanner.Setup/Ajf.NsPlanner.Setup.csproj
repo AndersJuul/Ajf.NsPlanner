@@ -148,5 +148,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\WixSharp.bin.1.14.2\build\WixSharp.bin.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WixSharp.bin.1.14.2\build\WixSharp.bin.targets'))" />
     <Error Condition="!Exists('..\packages\WixSharp.1.14.2\build\WixSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WixSharp.1.14.2\build\WixSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\OctoPack.3.6.4\build\OctoPack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OctoPack.3.6.4\build\OctoPack.targets'))" />
   </Target>
+  <Import Project="..\packages\OctoPack.3.6.4\build\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.6.4\build\OctoPack.targets')" />
 </Project>
