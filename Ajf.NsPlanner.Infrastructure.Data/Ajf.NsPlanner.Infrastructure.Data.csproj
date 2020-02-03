@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ajf.NsPlanner.Domain\Ajf.NsPlanner.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
