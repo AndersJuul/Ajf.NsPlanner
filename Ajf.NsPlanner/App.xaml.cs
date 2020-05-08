@@ -128,57 +128,57 @@ namespace Ajf.NsPlanner.UI
 
         private static void AddWindows(IServiceCollection services)
         {
-            services.AddTransient(typeof(MainWindow));
-            services.AddTransient(typeof(EditDatesWindow));
-            services.AddTransient(typeof(StatsAcceptedRejectedWindow));
-            services.AddTransient(typeof(StatsEmailAddressesWindow));
-            services.AddTransient(typeof(StatsSchoolWindow));
-            services.AddTransient(typeof(EditCounselorsWindow));
-            services.AddTransient(typeof(EditPlacesWindow));
-            services.AddTransient(typeof(EditAssignmentWindow));
+            services.AddSingleton(typeof(MainWindow));
+            services.AddSingleton(typeof(EditDatesWindow));
+            services.AddSingleton(typeof(StatsAcceptedRejectedWindow));
+            services.AddSingleton(typeof(StatsEmailAddressesWindow));
+            services.AddSingleton(typeof(StatsSchoolWindow));
+            services.AddSingleton(typeof(EditCounselorsWindow));
+            services.AddSingleton(typeof(EditPlacesWindow));
+            services.AddSingleton(typeof(EditAssignmentWindow));
         }
 
         private static void AddApplicationQueryHandlers(IServiceCollection services)
         {
-            services.AddScoped<IQueryHandler<FindPeriodsQuery, Period[]>, FindUsersBySearchTextQueryHandler>();
+            services.AddSingleton<IQueryHandler<FindPeriodsQuery, Period[]>, FindUsersBySearchTextQueryHandler>();
             services
-                .AddScoped<IQueryHandler<FindAssignmentsByTargetQuery, Assignment[]>, FindAssignmentsByPeriodQueryHandler>();
-            services.AddScoped<IQueryHandler<ListAvailableDatesQuery, AvailableDate[]>, ListAvailableDatesQueryHandler>();
-            services.AddScoped<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
-            services.AddScoped<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
-            services.AddScoped<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
-            services.AddScoped<IQueryHandler<ListCounselorsQuery, Counselor[]>, ListCounselorsQueryHandler>();
-            services.AddScoped<IQueryHandler<ListPlacesQuery, Place[]>, ListPlacesQueryHandler>();
+                .AddSingleton<IQueryHandler<FindAssignmentsByTargetQuery, Assignment[]>, FindAssignmentsByPeriodQueryHandler>();
+            services.AddSingleton<IQueryHandler<ListAvailableDatesQuery, AvailableDate[]>, ListAvailableDatesQueryHandler>();
+            services.AddSingleton<IQueryHandler<AcceptedRejectedQuery, SimpleStatTable>, AcceptedRejectedQueryHandler>();
+            services.AddSingleton<IQueryHandler<EmailAddressesQuery, SimpleStatTable>, EmailAddressesQueryHandler>();
+            services.AddSingleton<IQueryHandler<SchoolQuery, SimpleStatTable>, SchoolQueryHandler>();
+            services.AddSingleton<IQueryHandler<ListCounselorsQuery, Counselor[]>, ListCounselorsQueryHandler>();
+            services.AddSingleton<IQueryHandler<ListPlacesQuery, Place[]>, ListPlacesQueryHandler>();
         }
 
         private static void AddApplicationCommandHandlers(IServiceCollection services)
         {
-            services.AddScoped<ICommandHandler<AddPeriodCommand>, AddPeriodCommandHandler>();
-            services
-                .AddScoped<ICommandHandler<Application.Commands.DeletePeriodCommand>,DeletePeriodCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdatePeriodCommand>, UpdatePeriodCommandHandler>();
-            services.AddScoped<ICommandHandler<ImportRequestsCommand>, ImportRequestsCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdateAssignmentCommand>, UpdateAssignmentCommandHandler>();
-            services.AddScoped<ICommandHandler<ToggleAvailableDateXCommand>, ToggleAvailableDateXCommandHandler>();
-            services.AddScoped<ICommandHandler<AddAvailableDatesCommand>, AddAvailableDatesCommandHandler>();
-            services.AddScoped<ICommandHandler<SetMarkerOnAssignmentCommand>, SetMarkerOnAssignmentCommandHandler>();
-            services.AddScoped<ICommandHandler<AddCounselorCommand>, AddCounselorCommandHandler>();
-            services.AddScoped<ICommandHandler<AddPlaceCommand>, AddPlaceCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdateCounselorCommand>, UpdateCounselorCommandHandler>();
-            services.AddScoped<ICommandHandler<UpdatePlaceCommand>, UpdatePlaceCommandHandler>();
+            services.AddSingleton<ICommandHandler<AddPeriodCommand>, AddPeriodCommandHandler>();
+            services.AddSingleton<ICommandHandler<Application.Commands.DeletePeriodCommand>,DeletePeriodCommandHandler>();
+            services.AddSingleton<ICommandHandler<UpdatePeriodCommand>, UpdatePeriodCommandHandler>();
+            services.AddSingleton<ICommandHandler<ImportRequestsCommand>, ImportRequestsCommandHandler>();
+            services.AddSingleton<ICommandHandler<UpdateAssignmentCommand>, UpdateAssignmentCommandHandler>();
+            services.AddSingleton<ICommandHandler<ToggleAvailableDateXCommand>, ToggleAvailableDateXCommandHandler>();
+            services.AddSingleton<ICommandHandler<AddAvailableDatesCommand>, AddAvailableDatesCommandHandler>();
+            services.AddSingleton<ICommandHandler<SetMarkerOnAssignmentCommand>, SetMarkerOnAssignmentCommandHandler>();
+            services.AddSingleton<ICommandHandler<AddCounselorCommand>, AddCounselorCommandHandler>();
+            services.AddSingleton<ICommandHandler<AddPlaceCommand>, AddPlaceCommandHandler>();
+            services.AddSingleton<ICommandHandler<UpdateCounselorCommand>, UpdateCounselorCommandHandler>();
+            services.AddSingleton<ICommandHandler<UpdatePlaceCommand>, UpdatePlaceCommandHandler>();
         }
 
         private static void AddUiCommands(IServiceCollection services)
         {
-            services.AddScoped<INewPeriodCommand, NewPeriodCommand>();
-            services.AddScoped<INewCounselorCommand, NewCounselorCommand>();
-            services.AddScoped<IDeletePeriodCommand, DeletePeriodCommand>();
-            services.AddScoped<IImportLatestRawCommand, ImportLatestRawCommand>();
-            services.AddScoped<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
-            services.AddScoped<IStartAssignmentPlaceCommand, StartAssignmentPlaceCommand>();
-            services.AddScoped<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
-            services.AddScoped<ISetMarkerCommand, SetMarkerCommand>();
-            services.AddScoped<INewPlaceCommand, NewPlaceCommand>();
+            services.AddSingleton<INewPeriodCommand, NewPeriodCommand>();
+            services.AddSingleton<INewCounselorCommand, NewCounselorCommand>();
+            services.AddSingleton<IDeletePeriodCommand, DeletePeriodCommand>();
+            services.AddSingleton<IImportLatestRawCommand, ImportLatestRawCommand>();
+            services.AddSingleton<IStartAssignmentCounselorCommand, StartAssignmentCounselorCommand>();
+            services.AddSingleton<IStartAssignmentPlaceCommand, StartAssignmentPlaceCommand>();
+            services.AddSingleton<IToggleAvailableDateCommand, ToggleAvailableDateCommand>();
+            services.AddSingleton<ISetMarkerCommand, SetMarkerCommand>();
+            services.AddSingleton<INewPlaceCommand, NewPlaceCommand>();
+            services.AddSingleton<IResetWindowPositionsCommand, ResetWindowPositionsCommand>();
         }
 
         private static void AddDomainEventHandlers(IServiceCollection services)
@@ -197,7 +197,7 @@ namespace Ajf.NsPlanner.UI
 
             services.AddSingleton<IHandle<AvailableDateUpdatedEvent>>(c => c.GetService<IEditDatesViewModel>());
 
-            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
         }
 
         private static void AddViewModels(IServiceCollection services)
@@ -211,7 +211,7 @@ namespace Ajf.NsPlanner.UI
             services.AddSingleton<IStatsSchoolsViewModel, StatsSchoolsViewModel>();
             services.AddSingleton<IEditCounselorsViewModel, EditCounselorsViewModel>();
             services.AddSingleton<IEditPlacesViewModel, EditPlacesViewModel>();
-            services.AddScoped<IEditAssignmentViewModel, EditAssignmentViewModel>();
+            services.AddSingleton<IEditAssignmentViewModel, EditAssignmentViewModel>();
         }
 
         private static void AddDatabaseConnection(IServiceCollection services)

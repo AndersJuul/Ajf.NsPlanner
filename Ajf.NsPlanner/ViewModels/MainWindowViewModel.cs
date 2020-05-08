@@ -23,7 +23,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             IStatsEmailAddressesViewModel statsEmailAddressesViewModel, IStatsSchoolsViewModel statsSchoolsViewModel,
             ISetMarkerCommand setMarkerCommand, IEditCounselorsViewModel editCounselorsViewModel,
             IEditPlacesViewModel editPlacesViewModel, IEditAssignmentViewModel editAssignmentViewModel,
-            IStartAssignmentPlaceCommand startAssignmentPlaceCommand)
+            IStartAssignmentPlaceCommand startAssignmentPlaceCommand, IResetWindowPositionsCommand resetWindowPositionsCommand)
         {
             ImportLatestRawCommand = importLatestRawCommand;
             StartAssignmentCounselorCommand = startAssignmentCounselorCommand;
@@ -36,6 +36,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
             EditPlacesViewModel = editPlacesViewModel;
             EditAssignmentViewModel = editAssignmentViewModel;
             StartAssignmentPlaceCommand = startAssignmentPlaceCommand;
+            ResetWindowPositionsCommand = resetWindowPositionsCommand;
             PeriodSelectionViewModel = periodSelectionViewModel;
 
             PeriodSelectionViewModel.PropertyChanged += PeriodSelectionViewModel_PropertyChanged;
@@ -72,6 +73,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public IEditDatesViewModel EditDatesViewModel { get; }
         public IStartAssignmentPlaceCommand StartAssignmentPlaceCommand { get; }
+        public IResetWindowPositionsCommand ResetWindowPositionsCommand { get; }
 
         public RequestedDialog RequestedDialog
         {

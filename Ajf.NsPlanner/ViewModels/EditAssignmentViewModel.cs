@@ -40,7 +40,7 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public CounselorViewModel SelectedCounselor
         {
-            get => Counselors.SingleOrDefault(x=>x.Id== _assignmentsViewModel.SelectedAssignment.Assignment?.Counselor?.Id);
+            get => Counselors.SingleOrDefault(x=>x.Id== _assignmentsViewModel.SelectedAssignment?.Assignment?.Counselor?.Id);
             set
             {
                 _assignmentsViewModel.SelectedAssignment.Assignment.Counselor = value?.Model; 
@@ -91,6 +91,14 @@ namespace Ajf.NsPlanner.UI.ViewModels
 
         public void Set(string name, PositionEtc positionEtc)
         {
+            WindowPositionManager.Set(name, positionEtc);
+        }
+
+        public void Reset(string name)
+        {
+            var positionEtc = WindowPositionManager.Get(name);
+            positionEtc.Left = 0;
+            positionEtc.Top = 0;
             WindowPositionManager.Set(name, positionEtc);
         }
 

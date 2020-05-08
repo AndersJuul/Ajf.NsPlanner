@@ -11,21 +11,21 @@ namespace Ajf.NsPlanner.UI.Services
     public class WindowManager
     {
         private static readonly List<Window> Views = new List<Window>();
+
         public static void Register(Window window)
         {
             Views.Add(window);
 
             if (window.DataContext is IRememberWindowPosition model2)
             {
-                var positionEtc = model2.Get(window.GetType().FullName);
+                var positionEtc = WindowPositionManager.Get(window.GetType().FullName);
+                //var positionEtc = model2.Get(window.GetType().FullName);
                 if (positionEtc != null)
                 {
-                    window.Left = positionEtc.Left;
-                    window.Top = positionEtc.Top;
-                    window.Width = positionEtc.Width;
-                    window.Height = positionEtc.Height;
+                    MoveWindowToPosition(window, positionEtc);
                 }
             }
+
             if (window.DataContext is IShowAndHideWindows model)
             {
                 model.PropertyChanged += Model_PropertyChanged;
@@ -36,6 +36,14 @@ namespace Ajf.NsPlanner.UI.Services
             window.SizeChanged += Window_SizeChanged;
             window.LocationChanged += Window_LocationChanged;
             window.Closing += Window_Closing;
+        }
+
+        private static void MoveWindowToPosition(Window window, PositionEtc positionEtc)
+        {
+            window.Left = positionEtc.Left;
+            window.Top = positionEtc.Top;
+            window.Width = positionEtc.Width;
+            window.Height = positionEtc.Height;
         }
 
         private static void Window_Closing(object sender, CancelEventArgs e)
@@ -51,7 +59,8 @@ namespace Ajf.NsPlanner.UI.Services
         {
             if (sender is Window window)
             {
-                var positionEtc = new PositionEtc { Left = window.Left, Top = window.Top, Width = window.Width, Height = window.Height };
+                var positionEtc = new PositionEtc
+                    {Left = window.Left, Top = window.Top, Width = window.Width, Height = window.Height};
                 WindowPositionManager.Set(window.GetType().FullName, positionEtc);
             }
         }
@@ -60,7 +69,8 @@ namespace Ajf.NsPlanner.UI.Services
         {
             if (sender is Window window)
             {
-                var positionEtc = new PositionEtc { Left =window. Left, Top = window.Top, Width = window.Width, Height = window.Height };
+                var positionEtc = new PositionEtc
+                    {Left = window.Left, Top = window.Top, Width = window.Width, Height = window.Height};
                 WindowPositionManager.Set(window.GetType().FullName, positionEtc);
             }
         }
@@ -68,9 +78,7 @@ namespace Ajf.NsPlanner.UI.Services
         private static void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IShowAndHideWindows.IsOpen))
-            {
                 foreach (var view in Views.Where(x => x.DataContext == sender))
-                {
                     if (view.DataContext is IShowAndHideWindows m)
                     {
                         if (m.IsOpen)
@@ -82,8 +90,6 @@ namespace Ajf.NsPlanner.UI.Services
                         positionEtc.IsOpen = m.IsOpen;
                         WindowPositionManager.Set(view.GetType().FullName, positionEtc);
                     }
-                }
-            }
         }
 
         public static void OpenWindowsLastOpened()
@@ -91,14 +97,20 @@ namespace Ajf.NsPlanner.UI.Services
             foreach (var window in Views)
             {
                 var positionEtc = WindowPositionManager.Get(window.GetType().FullName);
-                if (positionEtc!=null)
-                {
+                if (positionEtc != null)
                     if (window.DataContext is IShowAndHideWindows model)
-                    {
                         model.IsOpen = positionEtc.IsOpen;
-                    }
-                }
             }
+        }
+
+        public static void ResetWindowPositions()
+        {
+            foreach (var window in Views)
+                if (window.DataContext is IRememberWindowPosition)
+                {
+                    WindowPositionManager.ResetPosition(window.GetType().FullName);
+                    MoveWindowToPosition(window,WindowPositionManager.Get(window.GetType().FullName));
+                }
         }
     }
 }

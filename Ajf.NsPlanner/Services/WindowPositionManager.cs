@@ -75,5 +75,13 @@ namespace Ajf.NsPlanner.UI.Services
         {
             File.WriteAllText(PathToFileWithWindowstatesJson, JsonConvert.SerializeObject(WindowPositionStates));
         }
+
+        public static void ResetPosition(string name)
+        {
+            var positionEtc = Get(name);
+            positionEtc.Left = 0;
+            positionEtc.Top = 0;
+            Set(name, positionEtc);
+        }
     }
 }

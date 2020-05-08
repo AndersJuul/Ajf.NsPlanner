@@ -33,8 +33,10 @@
                 <MenuItem Header="Tildelingsstatistik" IsCheckable="True" IsChecked="{Binding StatsAcceptedRejectedViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Emailstatistik" IsCheckable="True" IsChecked="{Binding StatsEmailAddressesViewModel.IsOpen}"></MenuItem>
                 <MenuItem Header="Skolestatistik" IsCheckable="True" IsChecked="{Binding StatsSchoolsViewModel.IsOpen}"></MenuItem>
-                
-            </MenuItem>
+                <Separator />
+                <MenuItem Header="Reset placeringer" IsCheckable="false" Command="{Binding ResetWindowPositionsCommand}" ></MenuItem>
+
+</MenuItem>
             <MenuItem Header="Tildel">
                 <MenuItem Header="Vejleder" CommandParameter="{Binding}" Command="{Binding StartAssignmentCounselorCommand}" InputGestureText="F5"/>
                 <MenuItem Header="Sted" CommandParameter="{Binding}" Command="{Binding StartAssignmentPlaceCommand}" InputGestureText="F6"/>
